@@ -7,7 +7,7 @@
 
 > Personal Corp is a way to run a one-person company through AI agents: tasks out of your head, departments instead of one person's memory, a weekly retro instead of "I'll sort it out someday".
 
-This repo holds the open skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and Codex that the framework is built from. Start with the six weekly-rhythm skills; add the rest when you need them.
+This repo holds everything you need for that: the story of how the system works, templates for the HQ and a department, and the open skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and Codex.
 
 By [Ris](https://t.me/ris_ai) — AI development & vibecoding.
 
@@ -21,9 +21,26 @@ Hiring does not fix it: a new person takes the work but not the context, so you 
 
 The issue is not model strength. The issue is that context never leaves your head.
 
-## The fix: a route, not a toolbox
+## The core idea: the folder defines the view
 
-Personal knowledge becomes company capital only when it travels the whole route.
+Rules live in every folder. Start the agent from the HQ and it sees the map of the whole system. Start it from a department and it sees that domain, its tasks, and its skills. Same model, different view, because the view is set by the folder rather than by a long prompt.
+
+Everything else follows from that: for this to work, context has to leave your head into files, and those files have to sit in folders that carry rules.
+
+## Four layers and who lives where
+
+| Layer | Who acts | What lives here |
+|---|---|---|
+| Management | The human | Goal, priorities, limits, the right to say "good enough" |
+| **Truth** | The human writes, the agent reads | Rules, memory, indexes, source of truth |
+| **Operations** | The agent executes, the human accepts | Tasks, queue, statuses, runs, departments |
+| Observation | The agent collects, the human looks | Dashboards, metrics, blockers |
+
+A subagent lives only in the operations layer: it does not write truth about the system and does not accept results.
+
+One test for any file: **is this truth about the system, or is it the result of work?** Truth sits in the folder from day one. Results are created by skills once there is something to record. That is why the templates ship no empty files for future reports, decisions, or glossaries.
+
+## The route: how experience becomes capital
 
 ```mermaid
 graph LR
@@ -38,11 +55,9 @@ graph LR
     style E fill:#10b981,color:#fff
 ```
 
-Three links of that route carry most of the value.
+**1. Writing the task down.** A thought becomes a task once it has an owner, done criteria, and a place to live. Before that it lives in you. After that both a human and an agent can pick it up.
 
-**1. Writing the task down.** A thought becomes a task once it has an owner, done criteria, and a place to live. Before that it lives in you. After that both a human and an agent can pick it up, because they have the same access to it.
-
-**2. Experience accumulating in departments.** Artifacts and decisions settle in a department — a separate repository for its own domain. Next time the agent reads the department instead of reading you.
+**2. Experience accumulating in departments.** Artifacts and decisions settle in a department — a separate folder for its own domain. Next time the agent reads the department instead of reading you.
 
 **3. Retro with the agent.** Once a week you look at what worked and promote it into rules. Whatever you corrected twice becomes a written rule and stops needing you.
 
@@ -52,9 +67,9 @@ Three links on their own are a feature list. The rhythm turns them into a system
 
 ```mermaid
 graph LR
-    R["weekly-retro<br/>what worked"] --> P["weekly-planning<br/>priorities of the week"]
-    P --> T["task-routing<br/>tasks into departments"]
-    T --> E["Execution<br/>manager writes the trace back"]
+    R["retro<br/>what worked"] --> P["planning<br/>priorities of the week"]
+    P --> T["tasks<br/>into departments"]
+    T --> E["execution<br/>the trace goes back into the task"]
     E --> R
     style R fill:#f59e0b,color:#fff
     style P fill:#3b82f6,color:#fff
@@ -64,25 +79,34 @@ graph LR
 
 The rhythm answers the question that usually stays unanswered: when exactly does experience turn into a rule. Answer: at the retro, once a week, not "someday".
 
-## Departments: where experience lives
+The same word gives a different result depending on the folder: "retro" inside a department means a slice of that department, "retro" in the HQ means a slice of the whole system. Folder rules win over general ones.
 
-A department is a separate repository that owns one domain and accumulates its artifacts, decisions, and rules.
+## Three levels of task tracking
 
-```
-the layer      owns truth
-the department owns the artifact
-the agent      owns execution
-acceptance     owns the "good enough" call
-```
+Start at level one. Move on only when the current level starts getting in the way.
 
-While experience sits in your head, it disappears with your attention. Once it sits in a department, the next agent and the next person both use it.
+| Level | What it looks like | When to move up |
+|---|---|---|
+| 1 | A single `tasks.md` with today's work | Always, this is the start |
+| 2 | Day, long-running tasks, and history split into separate files | When you have to hold task context in your head |
+| 3 | Long-running task state in GitHub Issues, the day is a short list of links | When several repos or other people show up |
+
+## Templates
+
+| Template | What it is |
+|---|---|
+| [`templates/hq`](./templates/hq/) | The HQ — the agent's entry point and the map of the system |
+| [`templates/department`](./templates/department/) | A department — one domain with its own tasks and skills |
+
+Departments sit **next to the HQ, not inside it**. Every template file opens with a line stating why it is there and which layer it belongs to.
 
 ## First step: 30 minutes today
 
-1. Install the plugin (see [Install](#install)).
-2. Run [`corp-init`](./skills/corp-init/) to set up the loop: where tasks, rules, and weekly plans live.
-3. Create your first department with [`corp-new`](./skills/corp-new/) and put one real task into it with [`task-routing`](./skills/task-routing/).
-4. End of the week: run [`weekly-retro`](./skills/weekly-retro/). Start of the next: run [`weekly-planning`](./skills/weekly-planning/).
+1. Copy [`templates/hq`](./templates/hq/) to your machine and fill in `me.md`.
+2. Open the agent from that folder and ask it to read `AGENTS.md`.
+3. Create your first department from [`templates/department`](./templates/department/) next to the HQ and put one real task into it.
+4. Install the plugin (see [Install](#install)) — it brings the weekly-rhythm skills.
+5. Run the retro at the end of the week and planning at the start of the next one.
 
 After two such weeks the department has its own memory, and part of the decisions stop going through you.
 
@@ -106,6 +130,8 @@ After two such weeks the department has its own memory, and part of the decision
 | CEO | "I run a system" | No bottleneck, the system runs |
 
 Your job shrinks to three moves: set the goal, pick the next move, accept the result.
+
+Glossary — [CONTEXT.md](CONTEXT.md). Accepted architectural decisions — [docs/adr/](docs/adr/).
 
 ## Install
 
