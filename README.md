@@ -45,6 +45,59 @@ Start the agent from the HQ and it reads the HQ rules and sees the map of the wh
 
 Everything else follows from that: for this to work, context has to leave your head into files, and those files have to sit in folders that carry rules.
 
+## What a department is
+
+A department is a folder that owns one domain and accumulates experience about it. Inside it has its own rules, its own tasks, and its own skills.
+
+Departments sit next to the HQ, on the same level:
+
+```text
+Documents/GitHub/
+├── HQ/            the HQ: map of the system and entry point
+├── content/       department
+├── research/      department
+└── sales/         department
+```
+
+A department is built like the HQ and adds its own parts:
+
+![Contents of the department template: skills, tasks, AGENTS.md, CLAUDE.md, README.md](docs/images/department.png)
+
+### Which departments people start with
+
+I run about thirty. These are the usual first ones:
+
+| Department | What it accumulates | Time to create it |
+|---|---|---|
+| Content | Voice, topics, finished texts, notes on what landed | You write regularly and re-explain your style every time |
+| Research | Questions, found facts, sources, conclusions tied to decisions | You are looking up the same thing a second time |
+| Sales | People, agreements, correspondence, deal status | You keep track of who was promised what in your head |
+| Media | Briefs, prompts, finished assets, acceptance criteria | You generate images and video and the briefs get lost |
+| Legal | Contracts, templates, wording you already agreed to | Every new contract is assembled from scratch |
+| Finance | Expenses, subscriptions, recurring payments | You cannot recall what is charged every month |
+
+A department exists for repetition. Work that happened once is fine living in the HQ.
+
+## What a skill is
+
+A skill is a written-down way of working that can be repeated. Also a plain file: `SKILL.md` inside a `skills/` folder.
+
+![A skill file: a header block with name and description, then boundary and steps](docs/images/skill.png)
+
+A small header block carries the name and description, then it is ordinary text: where the boundary is, which steps to take, when to stop.
+
+The agent does not guess which skill to use. The folder rules carry a table that maps a request to a file:
+
+```md
+| Request              | What to read and run          |
+|----------------------|-------------------------------|
+| today's tasks        | skills/daily/SKILL.md         |
+| retro, week review   | skills/retro/SKILL.md         |
+| weekly planning      | skills/planning/SKILL.md      |
+```
+
+That is where the different behaviour per folder comes from. The word "retro" inside a department resolves to the department skill and produces a slice of that department. The same word in the HQ resolves to the HQ skill and produces a slice of the whole system.
+
 ## Four layers and who lives where
 
 | Layer | Who acts | What lives here |
@@ -101,7 +154,11 @@ The same word gives a different result depending on the folder: "retro" inside a
 
 ## Three levels of task tracking
 
-Start at level one. Move on only when the current level starts getting in the way.
+Level one is a single file with today's list. It looks like this:
+
+![The tasks.md file: Today, This week, and Rules sections](docs/images/tasks.png)
+
+Start there. Move on only when the current level starts getting in the way.
 
 | Level | What it looks like | When to move up |
 |---|---|---|
