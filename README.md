@@ -5,13 +5,107 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Validate](https://github.com/serejaris/personal-corp-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/serejaris/personal-corp-skills/actions/workflows/validate.yml)
 
-> Public skills and plugin manifests for Claude Code and Codex: Personal Corp, product work, AI operations, and agent-assisted development.
+> Personal Corp is a way to run a one-person company through AI agents: tasks out of your head, departments instead of one person's memory, a weekly retro instead of "I'll sort it out someday".
 
-By [Ris](https://t.me/ris_ai) — AI development & vibecoding
+This repo holds the open skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and Codex that the framework is built from. Start with the six weekly-rhythm skills; add the rest when you need them.
+
+By [Ris](https://t.me/ris_ai) — AI development & vibecoding.
 
 Русская версия: [README.ru.md](README.ru.md).
 
-A collection of sanitized public skills, scripts, and workflows for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and Codex.
+## The problem: you are the bottleneck
+
+Not because you work too little. Because strategy, memory, coordination, execution, and acceptance all sit in one pile — inside your head. While that is true, your department's throughput equals yours.
+
+Hiring does not fix it: a new person takes the work but not the context, so you keep explaining. AI alone does not fix it either: an agent without context is the same new hire, except it does not remember yesterday.
+
+The issue is not model strength. The issue is that context never leaves your head.
+
+## The fix: a route, not a toolbox
+
+Personal knowledge becomes company capital only when it travels the whole route.
+
+```mermaid
+graph LR
+    A["Task<br/>owner + criteria"] --> B["Execution<br/>human or agent"]
+    B --> C["Acceptance<br/>good enough or not"]
+    C --> D["Pattern<br/>what worked"]
+    D --> E["Department memory<br/>rules and decisions"]
+    E --> F["Priority<br/>next week"]
+    F --> A
+    style A fill:#8b5cf6,color:#fff
+    style C fill:#f59e0b,color:#fff
+    style E fill:#10b981,color:#fff
+```
+
+Three links of that route carry most of the value.
+
+**1. Writing the task down.** A thought becomes a task once it has an owner, done criteria, and a place to live. Before that it lives in you. After that both a human and an agent can pick it up, because they have the same access to it.
+
+**2. Experience accumulating in departments.** Artifacts and decisions settle in a department — a separate repository for its own domain. Next time the agent reads the department instead of reading you.
+
+**3. Retro with the agent.** Once a week you look at what worked and promote it into rules. Whatever you corrected twice becomes a written rule and stops needing you.
+
+## The weekly rhythm
+
+Three links on their own are a feature list. The rhythm turns them into a system.
+
+```mermaid
+graph LR
+    R["weekly-retro<br/>what worked"] --> P["weekly-planning<br/>priorities of the week"]
+    P --> T["task-routing<br/>tasks into departments"]
+    T --> E["Execution<br/>manager writes the trace back"]
+    E --> R
+    style R fill:#f59e0b,color:#fff
+    style P fill:#3b82f6,color:#fff
+    style T fill:#8b5cf6,color:#fff
+    style E fill:#10b981,color:#fff
+```
+
+The rhythm answers the question that usually stays unanswered: when exactly does experience turn into a rule. Answer: at the retro, once a week, not "someday".
+
+## Departments: where experience lives
+
+A department is a separate repository that owns one domain and accumulates its artifacts, decisions, and rules.
+
+```
+the layer      owns truth
+the department owns the artifact
+the agent      owns execution
+acceptance     owns the "good enough" call
+```
+
+While experience sits in your head, it disappears with your attention. Once it sits in a department, the next agent and the next person both use it.
+
+## First step: 30 minutes today
+
+1. Install the plugin (see [Install](#install)).
+2. Run [`corp-init`](./skills/corp-init/) to set up the loop: where tasks, rules, and weekly plans live.
+3. Create your first department with [`corp-new`](./skills/corp-new/) and put one real task into it with [`task-routing`](./skills/task-routing/).
+4. End of the week: run [`weekly-retro`](./skills/weekly-retro/). Start of the next: run [`weekly-planning`](./skills/weekly-planning/).
+
+After two such weeks the department has its own memory, and part of the decisions stop going through you.
+
+## The six skills of the route
+
+| Skill | Link in the route | What it does |
+|-------|-------------------|--------------|
+| [corp-init](./skills/corp-init/) | The loop | Init or repair HQ, GitHub issue workflow, corp-* owner map, and agent config |
+| [corp-new](./skills/corp-new/) | The department | Register a private corp-* department repo and HQ entry after approval |
+| [task-routing](./skills/task-routing/) | The task | Route issues to the correct repo using routing config |
+| [manager](./skills/manager/) | Execution | Sync session work into GitHub Issues and query cross-repo task state |
+| [weekly-retro](./skills/weekly-retro/) | Pattern into memory | Structured retrospective: gather data, interview founder, capture findings |
+| [weekly-planning](./skills/weekly-planning/) | Priority | Retro findings + backlog → prioritized outcomes with Eisenhower matrix |
+
+## Where this leads
+
+| Stage | How you think | Where the bottleneck is |
+|-------|---------------|-------------------------|
+| Vibecoder | "Me and AI" | Context in your head |
+| Operator | "I direct agents" | Coordination by hand |
+| CEO | "I run a system" | No bottleneck, the system runs |
+
+Your job shrinks to three moves: set the goal, pick the next move, accept the result.
 
 ## Install
 
@@ -55,8 +149,8 @@ Use this when you want one skill folder instead of the whole plugin:
 
 Replace `cc-analytics` with any skill name from the table below.
 
-## Skills
 
+## All skills
 | Skill | What it does |
 |-------|-------------|
 | [art-director](./skills/art-director/) | Iterative visual style search with prompts, process logs, assets, and decision graphs |
@@ -127,32 +221,6 @@ graph LR
 |-------|----------|
 | [tg-bot-ops](./skills/tg-bot-ops/) | Telegram bot and Telegram-to-agent gateway incidents, webhook/polling diagnostics, safe restart plans, Bot API smoke tests, forum topic delivery |
 
-#### Personal Corp Framework
-
-A system for running a business as one person with AI agents. GitHub becomes your operating system.
-
-```mermaid
-graph LR
-    A[project-init] -->|creates config| B[task-routing]
-    B -->|creates issues| C[weekly-planning]
-    C -->|prioritizes| D[weekly-retro]
-    D -->|feeds back| C
-    style A fill:#10b981,color:#fff
-    style B fill:#8b5cf6,color:#fff
-    style C fill:#3b82f6,color:#fff
-    style D fill:#f59e0b,color:#fff
-```
-
-| Skill | What it does |
-|-------|-------------|
-| [project-init](./skills/project-init/) | Guided interview → GitHub Project + labels + CLAUDE.md config |
-| [corp-new](./skills/corp-new/) | Register a private corp-* department repo and HQ entry after approval |
-| [safe-public-release](./skills/safe-public-release/) | Turn private/vendor/runtime artifacts into approved, sanitized, publicly verified packages |
-| [task-routing](./skills/task-routing/) | Route issues to the correct repo using routing config |
-| [weekly-planning](./skills/weekly-planning/) | Retro findings + backlog → prioritized outcomes with Eisenhower matrix |
-| [weekly-retro](./skills/weekly-retro/) | Structured retrospective: gather data, interview founder, capture findings |
-| [manager](./skills/manager/) | Sync session work into GitHub Issues and query cross-repo task state |
-| [pm-prioritize](./skills/pm-prioritize/) | Rank requirements and backlogs before planning |
 
 ## Other
 
