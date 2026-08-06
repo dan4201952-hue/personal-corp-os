@@ -7,9 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-08-06
+
 ### Changed
+- **BREAKING** — repository, plugin, and marketplace renamed from `personal-corp-skills` to `personal-corp-os`. GitHub redirects the old repository URLs, but the plugin identifier changed: remove the installed `personal-corp-skills` plugin and install `personal-corp-os@personal-corp-os`. Historical entries below keep the old name because that is what those releases shipped as.
+- README now opens with the framework instead of the install steps: the bottleneck problem, the route from a written task to department memory, the weekly rhythm, departments, a 30-minute first step, and a six-skill table that maps each skill to its link in the route. The flat catalogue moved below as **All skills** and is no longer nested under Telegram skills. Same structure in `README.ru.md`.
 - **project-init** renamed to **corp-init** and rewritten around the current Personal Corp operating model: HQ index + daily task files, `AGENTS.md` first, `manager` issue invariants, corp-* owner map, GitHub Projects, and repair/audit mode.
 - **manager** public docs/spec updated for the current operating cycle: `AGENTS.md` preferred, `corp-init` bootstrap, `weekly-planning` / `weekly-retro` preserved as separate rituals, and closed issues now require active day/week plan cleanup.
+
+### Fixed
+- `scripts/validate_repo.py` passes again after failing since 2026-07-19: the `fable-ruki-agenty` description is now a block scalar, and `to-prd` / `to-issues` got their missing English READMEs.
 
 ## [2.2.0] - 2026-07-01
 

@@ -1,9 +1,9 @@
-# Personal Corp Skills
+# Personal Corp OS
 
 [![en](https://img.shields.io/badge/lang-en-blue.svg)](README.md)
 [![ru](https://img.shields.io/badge/lang-ru-green.svg)](README.ru.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Validate](https://github.com/serejaris/personal-corp-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/serejaris/personal-corp-skills/actions/workflows/validate.yml)
+[![Validate](https://github.com/serejaris/personal-corp-os/actions/workflows/validate.yml/badge.svg)](https://github.com/serejaris/personal-corp-os/actions/workflows/validate.yml)
 
 > Personal Corp is a way to run a one-person company through AI agents: tasks out of your head, departments instead of one person's memory, a weekly retro instead of "I'll sort it out someday".
 
@@ -114,16 +114,16 @@ Your job shrinks to three moves: set the goal, pick the next move, accept the re
 Terminal:
 
 ```bash
-claude plugin marketplace add serejaris/personal-corp-skills
-claude plugin install personal-corp-skills@personal-corp-skills
-claude plugin details personal-corp-skills
+claude plugin marketplace add serejaris/personal-corp-os
+claude plugin install personal-corp-os@personal-corp-os
+claude plugin details personal-corp-os
 ```
 
 Claude Code Desktop or interactive `/plugin` flow:
 
 1. Open **Plugins** or `/plugin`.
-2. Add marketplace: `serejaris/personal-corp-skills`.
-3. Install `personal-corp-skills`.
+2. Add marketplace: `serejaris/personal-corp-os`.
+3. Install `personal-corp-os`.
 
 ### Codex
 
@@ -131,8 +131,8 @@ This repo includes a Codex plugin manifest at [.codex-plugin/plugin.json](.codex
 Add the marketplace from GitHub, then install the plugin:
 
 ```bash
-codex plugin marketplace add serejaris/personal-corp-skills
-codex plugin add personal-corp-skills@personal-corp-skills
+codex plugin marketplace add serejaris/personal-corp-os
+codex plugin add personal-corp-os@personal-corp-os
 ```
 
 After installation, start a new Codex thread and try:
@@ -141,11 +141,15 @@ After installation, start a new Codex thread and try:
 Use Personal Corp skills to plan my week.
 ```
 
+### Migrating from personal-corp-skills
+
+The repository was named `personal-corp-skills` until 2026-08-06. GitHub redirects the old links. The plugin identifier was renamed along with the repository, so remove the installed `personal-corp-skills` plugin via `/plugin` in Claude Code and install the new one using the instructions above.
+
 ### Single Skill
 
 Use this when you want one skill folder instead of the whole plugin:
 
-> Install this skill: `https://github.com/serejaris/personal-corp-skills/tree/main/skills/cc-analytics`
+> Install this skill: `https://github.com/serejaris/personal-corp-os/tree/main/skills/cc-analytics`
 
 Replace `cc-analytics` with any skill name from the table below.
 

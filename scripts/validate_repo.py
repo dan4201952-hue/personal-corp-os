@@ -10,7 +10,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-REPO_SLUG = "serejaris/personal-corp-skills"
+REPO_SLUG = "serejaris/personal-corp-os"
 REPO_URL = f"https://github.com/{REPO_SLUG}"
 LEGACY_NAME = "ris" + "-claude-code"
 
@@ -126,12 +126,12 @@ def validate_readme_skill_links(skill_names: list[str]) -> None:
         if first_skills_index != -1 and install_index > first_skills_index:
             fail(f"{filename} install instructions must appear before the skills list")
         required_snippets = [
-            "claude plugin marketplace add serejaris/personal-corp-skills",
-            "claude plugin install personal-corp-skills@personal-corp-skills",
-            "claude plugin details personal-corp-skills",
-            "codex plugin add personal-corp-skills@personal-corp-skills",
-            "codex plugin marketplace add serejaris/personal-corp-skills",
-            "https://github.com/serejaris/personal-corp-skills/tree/main/skills/cc-analytics",
+            "claude plugin marketplace add serejaris/personal-corp-os",
+            "claude plugin install personal-corp-os@personal-corp-os",
+            "claude plugin details personal-corp-os",
+            "codex plugin add personal-corp-os@personal-corp-os",
+            "codex plugin marketplace add serejaris/personal-corp-os",
+            "https://github.com/serejaris/personal-corp-os/tree/main/skills/cc-analytics",
             "Use Personal Corp skills to plan my week.",
         ]
         for snippet in required_snippets:
@@ -154,8 +154,8 @@ def validate_plugin_metadata() -> None:
     plugin = validate_json(ROOT / ".codex-plugin" / "plugin.json")
     codex_marketplace = validate_json(ROOT / ".agents" / "plugins" / "marketplace.json")
 
-    if plugin.get("name") != "personal-corp-skills":
-        fail(".codex-plugin/plugin.json name must be personal-corp-skills")
+    if plugin.get("name") != "personal-corp-os":
+        fail(".codex-plugin/plugin.json name must be personal-corp-os")
     if plugin.get("homepage") != REPO_URL:
         fail(".codex-plugin/plugin.json homepage must use the canonical repo URL")
     if plugin.get("repository") != REPO_URL:
@@ -180,11 +180,11 @@ def validate_plugin_metadata() -> None:
     if codex_entry.get("name") != plugin.get("name"):
         fail(".agents/plugins/marketplace.json plugin name must match plugin name")
     source = codex_entry.get("source")
-    if not isinstance(source, dict) or source.get("source") != "local" or source.get("path") != "./plugins/personal-corp-skills":
-        fail(".agents/plugins/marketplace.json plugin source must point to ./plugins/personal-corp-skills")
-    plugin_link = ROOT / "plugins" / "personal-corp-skills"
+    if not isinstance(source, dict) or source.get("source") != "local" or source.get("path") != "./plugins/personal-corp-os":
+        fail(".agents/plugins/marketplace.json plugin source must point to ./plugins/personal-corp-os")
+    plugin_link = ROOT / "plugins" / "personal-corp-os"
     if not plugin_link.is_symlink() or plugin_link.resolve() != ROOT:
-        fail("plugins/personal-corp-skills must be a symlink to the repo root for Codex marketplace discovery")
+        fail("plugins/personal-corp-os must be a symlink to the repo root for Codex marketplace discovery")
     policy = codex_entry.get("policy")
     if not isinstance(policy, dict) or policy.get("installation") != "AVAILABLE" or policy.get("authentication") != "ON_INSTALL":
         fail(".agents/plugins/marketplace.json plugin policy must be AVAILABLE/ON_INSTALL")
@@ -226,7 +226,7 @@ def validate_public_hygiene() -> None:
         "archive/skills/paperclip-api/SKILL.md",
         ".codex-plugin/plugin.json",
         ".agents/plugins/marketplace.json",
-        "plugins/personal-corp-skills",
+        "plugins/personal-corp-os",
         ".github/PULL_REQUEST_TEMPLATE.md",
         ".github/dependabot.yml",
         ".github/ISSUE_TEMPLATE/bug_report.yml",

@@ -1,14 +1,14 @@
 {
-  "name": "personal-corp-skills",
+  "name": "personal-corp-os",
   "interface": {
-    "displayName": "Personal Corp Skills"
+    "displayName": "Personal Corp OS"
   },
   "plugins": [
     {
-      "name": "personal-corp-skills",
+      "name": "personal-corp-os",
       "source": {
         "source": "local",
-        "path": "./plugins/personal-corp-skills"
+        "path": "./plugins/personal-corp-os"
       },
       "policy": {
         "installation": "AVAILABLE",

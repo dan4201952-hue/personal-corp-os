@@ -1,9 +1,9 @@
-# Personal Corp Skills
+# Personal Corp OS
 
 [![en](https://img.shields.io/badge/lang-en-blue.svg)](README.md)
 [![ru](https://img.shields.io/badge/lang-ru-green.svg)](README.ru.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Validate](https://github.com/serejaris/personal-corp-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/serejaris/personal-corp-skills/actions/workflows/validate.yml)
+[![Validate](https://github.com/serejaris/personal-corp-os/actions/workflows/validate.yml/badge.svg)](https://github.com/serejaris/personal-corp-os/actions/workflows/validate.yml)
 
 > Personal Corp — способ управлять личной компанией через AI-агентов: задачи вне головы, отделы вместо памяти одного человека, недельное ретро вместо «когда-нибудь разберусь».
 
@@ -114,16 +114,16 @@ graph LR
 В терминале:
 
 ```bash
-claude plugin marketplace add serejaris/personal-corp-skills
-claude plugin install personal-corp-skills@personal-corp-skills
-claude plugin details personal-corp-skills
+claude plugin marketplace add serejaris/personal-corp-os
+claude plugin install personal-corp-os@personal-corp-os
+claude plugin details personal-corp-os
 ```
 
 В Claude Code Desktop или interactive `/plugin` flow:
 
 1. Откройте **Plugins** или `/plugin`.
-2. Добавьте marketplace: `serejaris/personal-corp-skills`.
-3. Установите `personal-corp-skills`.
+2. Добавьте marketplace: `serejaris/personal-corp-os`.
+3. Установите `personal-corp-os`.
 
 ### Codex
 
@@ -131,8 +131,8 @@ claude plugin details personal-corp-skills
 Добавьте marketplace из GitHub, затем установите плагин:
 
 ```bash
-codex plugin marketplace add serejaris/personal-corp-skills
-codex plugin add personal-corp-skills@personal-corp-skills
+codex plugin marketplace add serejaris/personal-corp-os
+codex plugin add personal-corp-os@personal-corp-os
 ```
 
 После установки откройте новый Codex thread и проверьте:
@@ -141,11 +141,15 @@ codex plugin add personal-corp-skills@personal-corp-skills
 Use Personal Corp skills to plan my week.
 ```
 
+### Переход с personal-corp-skills
+
+До 06.08.2026 репозиторий назывался `personal-corp-skills`. Старые ссылки GitHub перенаправляет сам. Плагин переименован вместе с репозиторием, поэтому в Claude Code удалите установленный плагин `personal-corp-skills` через `/plugin` и поставьте новый по инструкции выше.
+
 ### Один скилл
 
 Используйте этот вариант, если нужна одна папка скилла:
 
-> Install this skill: `https://github.com/serejaris/personal-corp-skills/tree/main/skills/cc-analytics`
+> Install this skill: `https://github.com/serejaris/personal-corp-os/tree/main/skills/cc-analytics`
 
 Замените `cc-analytics` на имя любого скилла из таблицы ниже.
 

@@ -1,4 +1,4 @@
-# personal-corp-skills
+# personal-corp-os
 
 Collection of Claude Code customizations: skills, statusline, hooks.
 
@@ -55,7 +55,7 @@ READMEs update only when skills list changes (add/remove).
 4. Run `claude plugin validate .claude-plugin/marketplace.json`
 5. Run `claude plugin tag --dry-run --force .`
 6. Run a clean Codex install smoke:
-   `tmp_home=$(mktemp -d); HOME="$tmp_home" codex plugin marketplace add .; HOME="$tmp_home" codex plugin add personal-corp-skills@personal-corp-skills; rm -rf "$tmp_home"`
+   `tmp_home=$(mktemp -d); HOME="$tmp_home" codex plugin marketplace add .; HOME="$tmp_home" codex plugin add personal-corp-os@personal-corp-os; rm -rf "$tmp_home"`
 7. Run `git diff --check`
 8. Commit: `docs: update changelog for vX.Y.Z`
 9. Tag: `git tag -a vX.Y.Z -m "Release vX.Y.Z"`

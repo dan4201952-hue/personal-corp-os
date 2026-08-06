@@ -1,14 +1,14 @@
 {
-  "name": "personal-corp-skills",
-  "version": "2.2.1",
-  "description": "Public Claude Code and Codex skills for Personal Corp, product work, safe public releases, AI operations, and agent-assisted development",
+  "name": "personal-corp-os",
+  "version": "3.0.0",
+  "description": "Personal Corp OS: run a one-person company through AI agents with a weekly rhythm, department repos, safe public releases, and open Claude Code and Codex skills",
   "author": {
     "name": "Sereja Ris",
     "email": "ris@sereja.tech",
     "url": "https://sereja.tech"
   },
-  "homepage": "https://github.com/serejaris/personal-corp-skills",
-  "repository": "https://github.com/serejaris/personal-corp-skills",
+  "homepage": "https://github.com/serejaris/personal-corp-os",
+  "repository": "https://github.com/serejaris/personal-corp-os",
   "license": "MIT",
   "keywords": [
     "personal-corp",
@@ -33,7 +33,7 @@
   ],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Personal Corp Skills",
+    "displayName": "Personal Corp OS",
     "shortDescription": "Public skills for Personal Corp, AI operations, and safe releases.",
     "longDescription": "A public collection of sanitized Claude Code and Codex skills for Personal Corp workflows, product audits, GitHub operations, safe public artifact releases, Telegram bot operations, media/art-direction workflows, and agent-assisted development.",
     "developerName": "Sereja Ris",
@@ -43,9 +43,9 @@
       "Documentation",
       "Workflow Automation"
     ],
-    "websiteURL": "https://github.com/serejaris/personal-corp-skills",
-    "privacyPolicyURL": "https://github.com/serejaris/personal-corp-skills/blob/main/SECURITY.md",
-    "termsOfServiceURL": "https://github.com/serejaris/personal-corp-skills/blob/main/LICENSE",
+    "websiteURL": "https://github.com/serejaris/personal-corp-os",
+    "privacyPolicyURL": "https://github.com/serejaris/personal-corp-os/blob/main/SECURITY.md",
+    "termsOfServiceURL": "https://github.com/serejaris/personal-corp-os/blob/main/LICENSE",
     "brandColor": "#2563EB",
     "defaultPrompt": [
       "Use Personal Corp skills to plan my week.",

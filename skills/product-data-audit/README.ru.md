@@ -36,7 +36,7 @@
 
 Скажи агенту:
 
-> Установи скилл: `https://github.com/serejaris/personal-corp-skills/tree/main/skills/product-data-audit`
+> Установи скилл: `https://github.com/serejaris/personal-corp-os/tree/main/skills/product-data-audit`
 
 Или скопируй `SKILL.md` + `references/` в `~/.claude/skills/product-data-audit/`.
 
