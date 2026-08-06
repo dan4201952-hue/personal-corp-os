@@ -23,23 +23,19 @@ The issue is not model strength. The issue is that context never leaves your hea
 
 ## What agent rules actually are
 
-Agent rules are a plain text file called `AGENTS.md` sitting in a folder. No magic: markdown you read with your eyes and edit by hand.
+Agent rules are a plain text file sitting in a folder. No magic: text you read with your eyes and edit by hand.
 
-The agent opens it first and learns three things: who works here and what each of them may do, in which order to read the other files, and where to go for a given fact.
+Such a file lives in every folder, and its content differs.
 
-Here is the top of that file in the HQ template:
+![Every folder carries its own rules file: the HQ sees the whole system, a department sees only its domain](docs/images/rules-place.png)
 
-![The agent rules file: markdown with a roles table and a reading order](docs/images/rules.png)
+Opening a folder, the agent learns three things from that file.
 
-It sits right in the folder, next to everything else:
+![What the agent learns: who works here, in which order to read, where the truth lives](docs/images/rules-inside.png)
 
-![Contents of the HQ folder: AGENTS.md, CLAUDE.md, README.md, me.md, tasks.md and a skills folder](docs/images/folder.png)
-
-`CLAUDE.md` next to it exists so Claude Code reads the same rules. It holds a single line pointing at `AGENTS.md`, so the rules stay in one place.
+Those three answers replace a long prompt. The agent gets them from the folder instead of your message, so you stop explaining the same thing every time.
 
 ## The core idea: the folder defines the view
-
-Every folder carries rules like these, and their content differs.
 
 Start the agent from the HQ and it reads the HQ rules and sees the map of the whole system. Start it from a department and it reads the department rules and sees that domain, its tasks, and its skills. Same model, different view, set by the folder rather than by a long prompt.
 
@@ -49,19 +45,7 @@ Everything else follows from that: for this to work, context has to leave your h
 
 A department is a folder that owns one domain and accumulates experience about it. Inside it has its own rules, its own tasks, and its own skills.
 
-Departments sit next to the HQ, on the same level:
-
-```text
-Documents/GitHub/
-├── HQ/            the HQ: map of the system and entry point
-├── content/       department
-├── research/      department
-└── sales/         department
-```
-
-A department is built like the HQ and adds its own parts:
-
-![Contents of the department template: skills, tasks, AGENTS.md, CLAUDE.md, README.md](docs/images/department.png)
+![A department: one domain next to the HQ with its own rules, tasks and skills](docs/images/department.png)
 
 ### Which departments people start with
 
@@ -80,23 +64,9 @@ A department exists for repetition. Work that happened once is fine living in th
 
 ## What a skill is
 
-A skill is a written-down way of working that can be repeated. Also a plain file: `SKILL.md` inside a `skills/` folder.
+A skill is a written-down way of working that can be repeated. You walk the work by hand once, write the steps down, and from then on the agent runs them.
 
-![A skill file: a header block with name and description, then boundary and steps](docs/images/skill.png)
-
-A small header block carries the name and description, then it is ordinary text: where the boundary is, which steps to take, when to stop.
-
-The agent does not guess which skill to use. The folder rules carry a table that maps a request to a file:
-
-```md
-| Request              | What to read and run          |
-|----------------------|-------------------------------|
-| today's tasks        | skills/daily/SKILL.md         |
-| retro, week review   | skills/retro/SKILL.md         |
-| weekly planning      | skills/planning/SKILL.md      |
-```
-
-That is where the different behaviour per folder comes from. The word "retro" inside a department resolves to the department skill and produces a slice of that department. The same word in the HQ resolves to the HQ skill and produces a slice of the whole system.
+![A skill: your phrase, a line in the folder rules, the steps, the result](docs/images/skill.png)
 
 ## Four layers and who lives where
 
@@ -154,17 +124,7 @@ The same word gives a different result depending on the folder: "retro" inside a
 
 ## Three levels of task tracking
 
-Level one is a single file with today's list. It looks like this:
-
-![The tasks.md file: Today, This week, and Rules sections](docs/images/tasks.png)
-
-Start there. Move on only when the current level starts getting in the way.
-
-| Level | What it looks like | When to move up |
-|---|---|---|
-| 1 | A single `tasks.md` with today's work | Always, this is the start |
-| 2 | Day, long-running tasks, and history split into separate files | When you have to hold task context in your head |
-| 3 | Long-running task state in GitHub Issues, the day is a short list of links | When several repos or other people show up |
+![Three levels of tasks: one list, day separate from long work, a shared tracker](docs/images/tasks.png)
 
 ## Templates
 
