@@ -110,13 +110,11 @@ Departments sit **next to the HQ, not inside it**. Every template file opens wit
 
 After two such weeks the department has its own memory, and part of the decisions stop going through you.
 
-## The six skills of the route
+## The four skills of the rhythm
 
 | Skill | Link in the route | What it does |
 |-------|-------------------|--------------|
-| [corp-init](./skills/corp-init/) | The loop | Init or repair HQ, GitHub issue workflow, corp-* owner map, and agent config |
-| [corp-new](./skills/corp-new/) | The department | Register a private corp-* department repo and HQ entry after approval |
-| [task-routing](./skills/task-routing/) | The task | Route issues to the correct repo using routing config |
+| [corp-doctor](./skills/corp-doctor/) | Loop, department, task | Diagnose and repair the loop, add a department, route a task |
 | [manager](./skills/manager/) | Execution | Sync session work into GitHub Issues and query cross-repo task state |
 | [weekly-retro](./skills/weekly-retro/) | Pattern into memory | Structured retrospective: gather data, interview founder, capture findings |
 | [weekly-planning](./skills/weekly-planning/) | Priority | Retro findings + backlog → prioritized outcomes with Eisenhower matrix |
@@ -181,76 +179,71 @@ Replace `cc-analytics` with any skill name from the table below.
 
 
 ## All skills
+
+### System rhythm
+
 | Skill | What it does |
-|-------|-------------|
-| [art-director](./skills/art-director/) | Iterative visual style search with prompts, process logs, assets, and decision graphs |
-| [product-data-audit](./skills/product-data-audit/) | Deep product/business audit → interactive HTML report with 12 sections |
-| [cc-analytics](./skills/cc-analytics/) | HTML reports of Claude Code usage statistics |
-| [ceo-council](./skills/ceo-council/) | Parallel sub-agents as C-level experts for strategic analysis |
-| [claude-md-writer](./skills/claude-md-writer/) | Create and refactor CLAUDE.md files following best practices |
-| [corp-new](./skills/corp-new/) | Add a private corp-* department repo and HQ entry after approval |
-| [safe-public-release](./skills/safe-public-release/) | Provenance, licensing, security allowlist, approval, and fresh-clone verification for public artifacts |
-| [design-minimal](./skills/design-minimal/) | Standalone minimal HTML pages for dashboards, briefs, handouts, and reports |
-| [gh-issues](./skills/gh-issues/) | Manage GitHub Issues via CLI with session context |
-| [meeting-copilot](./skills/meeting-copilot/) | Live meeting dashboard: prepare, update from transcript chunks, close with decisions and follow-ups |
+|---|---|
+| [corp-doctor](./skills/corp-doctor/) | One entry point to the loop: diagnose, repair, new department, task routing |
+| [manager](./skills/manager/) | Two-way bridge between the session and GitHub Issues, cross-repo status |
+| [weekly-retro](./skills/weekly-retro/) | Weekly retro: gather facts, interview the founder, capture findings |
+| [weekly-planning](./skills/weekly-planning/) | Retro findings and backlog become prioritized outcomes for the week |
+
+### From intent to tasks
+
+| Skill | What it does |
+|---|---|
+| [idea](./skills/idea/) | Capture one voiced idea into a provenance-tracked folder with index dedup |
+| [grill-me](./skills/grill-me/) | One question at a time until the plan is actually clear |
+| [to-prd](./skills/to-prd/) | Synthesize the conversation into `PRD.md` with no new interview |
+| [to-issues](./skills/to-issues/) | Split a PRD into vertical `tasks/NN-slug.md` slices with acceptance criteria |
+| [gh-issues](./skills/gh-issues/) | Manage GitHub Issues through the CLI with session context |
+
+### Product work
+
+| Skill | What it does |
+|---|---|
+| [pm-brainstorm](./skills/pm-brainstorm/) | Structured ideation with SCAMPER and impact/effort screening |
+| [pm-feedback](./skills/pm-feedback/) | Classify feedback, cluster themes, rank actionable pains |
+| [pm-competitive](./skills/pm-competitive/) | Competitor analysis with SWOT, feature matrix, differentiation |
+| [pm-prioritize](./skills/pm-prioritize/) | Rank the backlog with RICE, ICE, MoSCoW, or Kano |
+| [pm-prd](./skills/pm-prd/) | Structured PRD generation with product-type templates |
+| [pm-user-stories](./skills/pm-user-stories/) | Break an epic into INVEST user stories with a story map |
+| [pm-metrics](./skills/pm-metrics/) | Product metrics review: funnel, retention, alignment with goals |
+| [pm-roadmap](./skills/pm-roadmap/) | Update the Now/Next/Later roadmap with delay attribution |
+| [product-data-audit](./skills/product-data-audit/) | Deep product and business audit as a 12-section interactive report |
+
+### Design and media
+
+| Skill | What it does |
+|---|---|
+| [art-director](./skills/art-director/) | Iterative visual style search with a process log and a decision graph |
+| [design-minimal](./skills/design-minimal/) | One standalone HTML page: dashboard, brief, handout, report |
+| [html-draft](./skills/html-draft/) | One technical diagram in flat blueprint style: architecture, flows |
+| [parallel-design-variants](./skills/parallel-design-variants/) | Parallel bake-off through subagents, gallery, vote, then a mix |
+
+### Agent orchestration
+
+| Skill | What it does |
+|---|---|
+| [ceo-council](./skills/ceo-council/) | Parallel subagents as C-level experts for strategic analysis |
+| [fable-ruki-agenty](./skills/fable-ruki-agenty/) | Manual orchestration mode: specs into issues, execution to subagents |
+
+### Docs and rules
+
+| Skill | What it does |
+|---|---|
 | [readme-generator](./skills/readme-generator/) | Human-focused README files with proper structure |
-| [manager](./skills/manager/) | Bidirectional bridge between the current session and GitHub Issues |
-| [idea](./skills/idea/) | Capture one voiced idea into a provenance-tracked folder, dedup against an index, optional GitHub Project mirror |
-| [pm-prioritize](./skills/pm-prioritize/) | Rank backlogs with RICE, ICE, MoSCoW, or Kano and produce a decision log |
-| [pm-prd](./skills/pm-prd/) | Structured PRD generation with product-type templates and quality checklist |
-| [pm-user-stories](./skills/pm-user-stories/) | Break Epics into INVEST-validated User Stories with Story Map output |
-| [pm-competitive](./skills/pm-competitive/) | Multi-dimensional competitor analysis with SWOT and differentiation strategy |
-| [pm-feedback](./skills/pm-feedback/) | Classify user feedback, cluster themes, and rank actionable pain points |
-| [pm-brainstorm](./skills/pm-brainstorm/) | Structured product ideation with SCAMPER and Impact/Effort screening |
-| [pm-metrics](./skills/pm-metrics/) | Product metrics review — trends, funnel/retention diagnostics, OKR alignment |
-| [pm-roadmap](./skills/pm-roadmap/) | Update Now/Next/Later roadmap with delay attribution and scope-cut framework |
-| [html-draft](./skills/html-draft/) | One self-contained HTML diagram in flat engineering blueprint style — architecture, flows, spec sheets |
-| [parallel-design-variants](./skills/parallel-design-variants/) | Parallel design bake-off: N divergent directions via subagents, gallery, vote, then mix the winners |
-| [fable-ruki-agenty](./skills/fable-ruki-agenty/) | Manually-invoked orchestration mode: Fable writes self-sufficient specs into GitHub issue bodies and dispatches ready tasks to Sonnet subagents; never writes code itself |
-| [grill-me](./skills/grill-me/) | Relentless one-question-at-a-time interview about a plan until shared understanding; every fork becomes an explicit decision with a recommendation |
-| [to-prd](./skills/to-prd/) | Synthesize the conversation into `PRD.md` in the project folder — no interview; testing seams; follows grill-me |
-| [to-issues](./skills/to-issues/) | Split a PRD/spec into `tasks/NN-slug.md` — vertical tracer-bullet slices with acceptance criteria and dependencies |
-| [tg-bot-ops](./skills/tg-bot-ops/) | Reusable operations playbook for Telegram bots and Telegram-to-agent gateways |
+| [claude-md-writer](./skills/claude-md-writer/) | Create and refactor the agent rules file following best practices |
 
-### Design and Media Skills
+### Operations
 
-| Skill | Use When |
-|-------|----------|
-| [art-director](./skills/art-director/) | Iterative art direction, visual style search, generation branches, and decision graphs |
-| [design-minimal](./skills/design-minimal/) | Reading-first standalone HTML pages: dashboards, briefs, handouts, operating maps, reports |
-| [html-draft](./skills/html-draft/) | Technical diagrams in flat engineering blueprint style: architecture, system flows, spec sheets |
-| [parallel-design-variants](./skills/parallel-design-variants/) | Several genuinely different design directions to choose from — redesign, hero, landing, thumbnail; live bake-off with voting |
-
-### Product Management Skills
-
-| Skill | Use When |
-|-------|----------|
-| [pm-feedback](./skills/pm-feedback/) | Reviews, NPS exports, or support tickets need theme clustering and pain ranking |
-| [pm-competitive](./skills/pm-competitive/) | Entering a category, fundraising prep, or differentiation before a PRD |
-| [pm-brainstorm](./skills/pm-brainstorm/) | Structured ideation before quarterly planning or a new product bet |
-| [pm-prioritize](./skills/pm-prioritize/) | Backlog is too large — rank with RICE, ICE, MoSCoW, or Kano |
-| [pm-prd](./skills/pm-prd/) | Top requirements need a delivery-ready requirements document |
-| [pm-user-stories](./skills/pm-user-stories/) | PRD or Epic is ready to split into sprint-sized User Stories |
-| [pm-metrics](./skills/pm-metrics/) | Weekly/monthly metrics review, A/B reads, or OKR pacing checks |
-| [pm-roadmap](./skills/pm-roadmap/) | Sprint close or stakeholder review needs an updated Now/Next/Later roadmap |
-
-```mermaid
-graph LR
-    pmFeedback[pm-feedback] --> pmPrioritize[pm-prioritize]
-    pmCompetitive[pm-competitive] --> pmPrioritize
-    pmBrainstorm[pm-brainstorm] --> pmPrioritize
-    pmPrioritize --> pmPrd[pm-prd]
-    pmPrd --> pmUserStories[pm-user-stories]
-    pmMetrics[pm-metrics] --> pmRoadmap[pm-roadmap]
-    pmRoadmap --> pmPrioritize
-```
-
-### Telegram
-
-| Skill | Use When |
-|-------|----------|
-| [tg-bot-ops](./skills/tg-bot-ops/) | Telegram bot and Telegram-to-agent gateway incidents, webhook/polling diagnostics, safe restart plans, Bot API smoke tests, forum topic delivery |
-
+| Skill | What it does |
+|---|---|
+| [meeting-copilot](./skills/meeting-copilot/) | Live meeting dashboard: prepare, update from transcript, close with decisions |
+| [cc-analytics](./skills/cc-analytics/) | HTML report of Claude Code usage statistics |
+| [safe-public-release](./skills/safe-public-release/) | Provenance, licensing, allowlist, and fresh-clone checks before publishing |
+| [tg-bot-ops](./skills/tg-bot-ops/) | Operations playbook for Telegram bots and agent gateways |
 
 ## Other
 

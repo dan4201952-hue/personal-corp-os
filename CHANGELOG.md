@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.0] - 2026-08-06
+
+### Changed
+- **BREAKING** — `corp-init`, `corp-new` and `task-routing` merged into one skill, **corp-doctor**. It opens with a menu and waits for an explicit choice: diagnose, repair, new department, route a task, build from scratch. The founder never used a separate init step, and three skills for one loop meant guessing which one to call.
+- The skill catalogue in both READMEs is grouped instead of listed flat: system rhythm, from intent to tasks, product work, design and media, agent orchestration, docs and rules, operations.
+- Russian README rewritten against the editorial voice rules of the content department: em dashes cut from 18 to 2, guillemets replaced with straight quotes, antithesis constructions and negation-led openings removed.
+
+### Removed
+- `corp-init`, `corp-new`, `task-routing`. Their behaviour lives in `corp-doctor`.
+
 ## [3.0.0] - 2026-08-06
 
 ### Changed
