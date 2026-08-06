@@ -21,9 +21,27 @@ Hiring does not fix it: a new person takes the work but not the context, so you 
 
 The issue is not model strength. The issue is that context never leaves your head.
 
+## What agent rules actually are
+
+Agent rules are a plain text file called `AGENTS.md` sitting in a folder. No magic: markdown you read with your eyes and edit by hand.
+
+The agent opens it first and learns three things: who works here and what each of them may do, in which order to read the other files, and where to go for a given fact.
+
+Here is the top of that file in the HQ template:
+
+![The agent rules file: markdown with a roles table and a reading order](docs/images/rules.png)
+
+It sits right in the folder, next to everything else:
+
+![Contents of the HQ folder: AGENTS.md, CLAUDE.md, README.md, me.md, tasks.md and a skills folder](docs/images/folder.png)
+
+`CLAUDE.md` next to it exists so Claude Code reads the same rules. It holds a single line pointing at `AGENTS.md`, so the rules stay in one place.
+
 ## The core idea: the folder defines the view
 
-Rules live in every folder. Start the agent from the HQ and it sees the map of the whole system. Start it from a department and it sees that domain, its tasks, and its skills. Same model, different view, because the view is set by the folder rather than by a long prompt.
+Every folder carries rules like these, and their content differs.
+
+Start the agent from the HQ and it reads the HQ rules and sees the map of the whole system. Start it from a department and it reads the department rules and sees that domain, its tasks, and its skills. Same model, different view, set by the folder rather than by a long prompt.
 
 Everything else follows from that: for this to work, context has to leave your head into files, and those files have to sit in folders that carry rules.
 
