@@ -25,7 +25,7 @@ cp -r skills/weekly-planning ~/.claude/skills/
 
 ## Prerequisites
 
-Run `project-init` first to generate the config block in CLAUDE.md, or add manually:
+Run `corp-init` first to generate or repair the config block in AGENTS.md / CLAUDE.md, or add manually:
 
 ```markdown
 ## Agent Operations Config
@@ -54,10 +54,10 @@ routing:
 ## Part of Personal Corp Framework
 
 ```
-project-init → weekly-planning → work week → weekly-retro → repeat
+corp-init → weekly-planning → work week → weekly-retro → repeat
 ```
 
 ## See Also
 
-- [project-init](../project-init/) — one-time project setup
+- [corp-init](../corp-init/) — one-time setup or repair
 - [weekly-retro](../weekly-retro/) — structured weekly retrospective

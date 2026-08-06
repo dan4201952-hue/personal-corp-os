@@ -10,7 +10,7 @@ In a multi-repo setup, issues get created in the wrong repo — bot tasks in the
 
 ## Solution
 
-Reads the `### Task Routing` config block from CLAUDE.md (created by `project-init`) and matches task keywords to the correct target repo before creating any issue.
+Reads the task routing config from AGENTS.md / CLAUDE.md (created or repaired by `corp-init`) and matches task keywords to the correct target repo before creating any issue.
 
 ## Installation
 
@@ -29,13 +29,13 @@ cp -r skills/task-routing ~/.claude/skills/
 ## Part of Personal Corp Framework
 
 ```
-project-init → task-routing → weekly-planning / weekly-retro
+corp-init → task-routing → weekly-planning / weekly-retro
      ↑               ↑              ↑
   (setup)      (daily ops)    (weekly cycle)
 ```
 
 ## Related Skills
 
-- [project-init](../project-init/) — creates the routing config that this skill reads
+- [corp-init](../corp-init/) — creates or repairs the routing config that this skill reads
 - [weekly-planning](../weekly-planning/) — creates W-labels and prioritizes issues
 - [weekly-retro](../weekly-retro/) — creates retro backlog issues

@@ -5,7 +5,7 @@ description: Use when creating GitHub issues, adding tasks to backlog, or when u
 
 # Task Routing
 
-Route issues to the correct repo using the routing config from CLAUDE.md. Part of the Personal Corp framework: `project-init` → **`task-routing`** → `weekly-planning` / `weekly-retro`.
+Route issues to the correct repo using the routing config from AGENTS.md / CLAUDE.md. Part of the Personal Corp framework: `corp-init` → **`task-routing`** → `weekly-planning` / `weekly-retro`.
 
 ## How It Works
 
@@ -36,7 +36,7 @@ routing:
     repo: owner/main-repo
 ```
 
-This config is created by `project-init`. If it doesn't exist — STOP and tell the user to run `project-init` first.
+This config is created or repaired by `corp-init`. If it doesn't exist — STOP and tell the user to run `corp-init` first.
 
 ## Step 2: Match Pattern
 
@@ -107,7 +107,7 @@ Issue title prefixes follow conventional commits:
 | Issue about bot created in school-brain | Check routing: "bot" → hsl-mozg |
 | W14 label created manually | W-labels come from weekly-planning only |
 | Duplicate issue across repos | Search unified project before creating |
-| No routing config found | Run project-init first |
+| No routing config found | Run corp-init first |
 | Added to wrong GitHub Project | Let GitHub auto-add handle project assignment |
 
 ## Minimal Example

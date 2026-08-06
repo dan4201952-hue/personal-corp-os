@@ -25,7 +25,7 @@ cp -r skills/weekly-planning ~/.claude/skills/
 
 ## Пререквизиты
 
-Сначала запустите `project-init` для генерации конфига в CLAUDE.md, или добавьте вручную:
+Сначала запустите `corp-init` для генерации или ремонта конфига в AGENTS.md / CLAUDE.md, или добавьте вручную:
 
 ```markdown
 ## Agent Operations Config
@@ -54,10 +54,10 @@ routing:
 ## Часть фреймворка Personal Corp
 
 ```
-project-init → weekly-planning → рабочая неделя → weekly-retro → повтор
+corp-init → weekly-planning → рабочая неделя → weekly-retro → повтор
 ```
 
 ## См. также
 
-- [project-init](../project-init/) — разовая настройка проекта
+- [corp-init](../corp-init/) — разовая настройка или ремонт
 - [weekly-retro](../weekly-retro/) — структурированное ретро недели

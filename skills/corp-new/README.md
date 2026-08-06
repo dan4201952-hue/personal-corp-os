@@ -73,5 +73,5 @@ cp -r skills/corp-new ~/.claude/skills/
 ## See Also
 
 - [SKILL.md](SKILL.md) — full workflow and validation gates
-- [project-init](../project-init/) — initial GitHub operating-system setup
+- [corp-init](../corp-init/) — initial or repair GitHub operating-system setup
 - [task-routing](../task-routing/) — route issues across existing repos

@@ -10,7 +10,7 @@
 
 ## Решение
 
-Читает секцию `### Task Routing` из CLAUDE.md (созданную `project-init`) и матчит ключевые слова задачи с правильным целевым репозиторием.
+Читает routing config из AGENTS.md / CLAUDE.md (созданный или отремонтированный `corp-init`) и матчит ключевые слова задачи с правильным целевым репозиторием.
 
 ## Установка
 
@@ -29,13 +29,13 @@ cp -r skills/task-routing ~/.claude/skills/
 ## Часть фреймворка Personal Corp
 
 ```
-project-init → task-routing → weekly-planning / weekly-retro
+corp-init → task-routing → weekly-planning / weekly-retro
      ↑               ↑              ↑
  (настройка)   (ежедневная)    (недельный цикл)
 ```
 
 ## Связанные скиллы
 
-- [project-init](../project-init/) — создаёт routing конфиг
+- [corp-init](../corp-init/) — создаёт или ремонтирует routing конфиг
 - [weekly-planning](../weekly-planning/) — создаёт W-labels и приоритизирует
 - [weekly-retro](../weekly-retro/) — создаёт бэклог из ретро

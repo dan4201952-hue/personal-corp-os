@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- **project-init** renamed to **corp-init** and rewritten around the current Personal Corp operating model: HQ index + daily task files, `AGENTS.md` first, `manager` issue invariants, corp-* owner map, GitHub Projects, and repair/audit mode.
+- **manager** public docs/spec updated for the current operating cycle: `AGENTS.md` preferred, `corp-init` bootstrap, `weekly-planning` / `weekly-retro` preserved as separate rituals, and closed issues now require active day/week plan cleanup.
+
 ## [2.2.0] - 2026-07-01
 
 ### Added

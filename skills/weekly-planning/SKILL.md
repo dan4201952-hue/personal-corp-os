@@ -74,7 +74,7 @@ IMPORTANT: Verify dates before writing outcomes. Do not create deadlines in the 
 
 ### 3. Group by surface
 
-Group tasks by where work happens. Use the repos and task routing defined in your `CLAUDE.md` config (set up by `project-init`).
+Group tasks by where work happens. Use the repos and task routing defined in `AGENTS.md` / `CLAUDE.md` config (set up by `corp-init`).
 
 Example surfaces:
 
@@ -185,7 +185,7 @@ This skill runs AFTER `weekly-retro`. Expected inputs:
 
 ## Setup
 
-This skill reads config from your project's `CLAUDE.md`. Run `project-init` first to generate the config block, or add manually:
+This skill reads config from your project's `AGENTS.md` / `CLAUDE.md`. Run `corp-init` first to generate or repair the config block, or add manually:
 
 ```markdown
 ## Agent Operations Config

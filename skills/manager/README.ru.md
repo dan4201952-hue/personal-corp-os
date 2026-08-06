@@ -13,6 +13,8 @@
 
 GitHub Issues — это твоя единственная правда по задачам; GitHub Project-доска — правда о том, что сейчас в работе. Скилл следит за набором инвариантов на issue (parent epic через Sub-issues API, W-label, Project placement, work-record комментарий при реальной работе) и за человекочитаемым title по формуле без префикса.
 
+Manager — это issue-мост в операционном цикле. `weekly-retro` разбирает прошедшую неделю, `weekly-planning` ведёт week/day plans, `manager` синхронизирует GitHub issues, Projects, labels, parents, comments и строки плана по фактической работе.
+
 ## Зачем нужно
 
 Без такого моста ты:
@@ -48,19 +50,21 @@ GitHub Issues — это твоя единственная правда по з�
 
 ```bash
 cp -r skills/manager ~/.claude/skills/
+cp -r skills/manager ~/.codex/skills/
 ```
 
-После этого скилл доступен в Claude Code.
+Используй путь своего agent runtime. Для plugin-install используется общий plugin repo; один и тот же `SKILL.md` работает в Claude Code и Codex.
 
 ## Настройка
 
-Добавь в `CLAUDE.md` твоего проекта секцию `## Manager Config`. Минимальная настройка:
+Добавь секцию `## Manager Config` в `AGENTS.md` проекта (предпочтительно) или `CLAUDE.md` (compatibility). Если agent config ещё нет, сначала запусти `corp-init`.
 
 | Конфиг | Назначение |
 |--------|------------|
 | GitHub owner | Твой username или организация для cross-repo поиска |
 | Repos to scan | Список репозиториев, в которых искать issues |
 | Tasks index file (опц.) | Путь к файлу с приоритетами текущей недели (например `tasks.md`) — скилл читает его FIRST до любого `gh search` |
+| Tasks directory (опц.) | Путь к дневным планам `tasks/WNN/YYYY-MM-DD.md`, которые ведёт `weekly-planning` |
 | Domain → repo routing | Маппинг доменов задач на репозитории (куда какой тип issue) |
 | GitHub Projects integration | Твоя weekly Project-доска + status-поле/опция — Project placement это инвариант |
 | W-label convention (опц.) | Включить ли еженедельные лейблы (`W18`, `W19`...) |
@@ -89,7 +93,8 @@ cp -r skills/manager ~/.claude/skills/
 1. Силент pre-flight — читает индекс приоритетов, проверяет git status релевантных репо
 2. Показывает компактный план (5-15 строк): что обновить / создать / привязать к какому epic
 3. По авторизации из конфига — выполняет апдейты или просит подтверждения
-4. Возвращает короткий отчёт «Готово / Пропущено»
+4. Если закрывает issue, убирает его из active day/week plan или заменяет на следующий открытый child
+5. Возвращает короткий отчёт «Готово / Пропущено / Plan cleanup»
 
 **Read mode (запрос статуса):**
 
@@ -125,5 +130,6 @@ cp -r skills/manager ~/.claude/skills/
 
 - [SKILL.md](SKILL.md) — полная спецификация: алгоритмы write/read mode, parent epic rules, W-label rules, title convention, output templates
 - [README.md](README.md) — English version
-- `weekly-planning` — куда уходит индекс приоритетов после ретро
-- `weekly-retro` — `retro:W*` лейблы, на которые опирается manager
+- `corp-init` — создаёт или чинит manager config
+- `weekly-planning` — ведёт week index и day plans
+- `weekly-retro` — разбирает прошедшую неделю и даёт evidence/backlog

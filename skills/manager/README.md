@@ -13,6 +13,8 @@ One skill, two modes:
 
 GitHub Issues become your single source of truth for tasks; a GitHub Project board is the source of truth for what's active. The skill enforces a set of invariants per issue (parent epic via Sub-issues API, W-label, Project placement, work-record comment on real work) and a predictable no-prefix title formula.
 
+Manager is the issue bridge in the operating cycle. `weekly-retro` reviews the past week, `weekly-planning` curates the week/day plans, and `manager` keeps GitHub issues, Projects, labels, parents, comments, and touched plan rows consistent during actual work.
+
 ## Why you'd want it
 
 Without this bridge:
@@ -48,19 +50,21 @@ The skill closes all four gaps: pre-flight read of your priorities index, cross-
 
 ```bash
 cp -r skills/manager ~/.claude/skills/
+cp -r skills/manager ~/.codex/skills/
 ```
 
-The skill is then available in Claude Code.
+Use the path for your agent runtime. For plugin installs, use the repository plugin instructions; the same `SKILL.md` is shared by Claude Code and Codex.
 
 ## Setup
 
-Add a `## Manager Config` section to your project's `CLAUDE.md`. Minimal config:
+Add a `## Manager Config` section to your project's `AGENTS.md` (preferred) or `CLAUDE.md` (compatibility). If there is no agent config yet, run `corp-init` first.
 
 | Config | Purpose |
 |--------|---------|
 | GitHub owner | Your username or org for cross-repo issue search |
 | Repos to scan | List of repos to search for issues |
 | Tasks index file (optional) | Path to your current-week priorities file (e.g. `tasks.md`) — read FIRST before any `gh search` |
+| Tasks directory (optional) | Path to `tasks/WNN/YYYY-MM-DD.md` day plans created by `weekly-planning` |
 | Domain → repo routing | Map task domains to repos (which type of issue lands where) |
 | GitHub Projects integration | Your weekly Project board + status field/option — Project placement is an invariant |
 | W-label convention (optional) | Whether to use weekly labels (`W18`, `W19`...) |
@@ -89,7 +93,8 @@ The skill:
 1. Silent pre-flight — reads priorities index, checks `git status` of relevant repos
 2. Shows a compact plan (5-15 lines): what to update / create / attach to which epic
 3. Per configured authorization — executes or asks for confirmation
-4. Returns a short report — Done / Skipped
+4. If it closes an issue, removes that issue from active day/week plans or replaces it with the next open child
+5. Returns a short report — Done / Skipped / Plan cleanup
 
 **Read mode (status query):**
 
@@ -125,5 +130,6 @@ The skill enforces invariants for every issue it touches — the base three alwa
 
 - [SKILL.md](SKILL.md) — full specification: write/read mode algorithms, parent epic rules, W-label rules, title convention, output templates
 - [README.ru.md](README.ru.md) — Russian version
-- `weekly-planning` — where the priorities index comes from after retro
-- `weekly-retro` — `retro:W*` labels that manager respects
+- `corp-init` — creates or repairs the manager config
+- `weekly-planning` — curates the week index and day plans
+- `weekly-retro` — reviews the closing week and produces evidence/backlog

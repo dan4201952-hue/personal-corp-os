@@ -4,10 +4,12 @@ description: >-
   Use when need to sync session work into GitHub issues OR query status of an
   existing track across repos. Two modes — write (end-of-session sync: find
   issues, update body, work-record comment, parent epic + W-label + Project
-  placement) and read (status lookup across repos with parent/W-label/Project
-  health). Triggers on "/manager", "sync session", "обнови issues", "синкни
-  сессию", "зафиксируй прогресс", "статус задачи", "что по <track>", "есть ли
-  issue по", "track status", "what about <track>".
+  placement, and clean closed tasks from active day/week plans) and read
+  (status lookup across repos with parent/W-label/Project health). Fits the
+  corp-init / weekly-planning / weekly-retro operating cycle. Triggers on
+  "/manager", "sync session", "обнови issues", "синкни сессию",
+  "зафиксируй прогресс", "статус задачи", "что по <track>", "есть ли issue по",
+  "track status", "what about <track>".
 ---
 
 # Manager — bidirectional GitHub issues bridge
@@ -23,7 +25,7 @@ Bridges session work and GitHub issues in both directions. GitHub issues are the
 
 ## Setup
 
-Before first use, define this in your project's `CLAUDE.md`:
+Before first use, define this in your project's `AGENTS.md` (preferred) or `CLAUDE.md` (compatibility). If the project has no agent config yet, run `corp-init` to create or repair it.
 
 ```markdown
 ## Manager Config
@@ -39,9 +41,13 @@ List repos manager should search:
 - ~/Projects/marketing
 
 ### Tasks index file (optional)
-Path to your curated "what's hot this week" file. Manager reads it FIRST before any `gh search` to scope queries:
+Path to your curated current-week index. Manager reads it FIRST before any `gh search` to scope queries:
 - tasks_index: ~/docs/tasks.md
 (если файла нет — manager работает без индекса, поиск идёт по всем repos)
+
+### Tasks directory (optional)
+Path to day/week plan files created by weekly-planning:
+- tasks_dir: ~/docs/tasks/
 
 ### Domain → repo routing
 | Domain | Repo |
@@ -79,7 +85,7 @@ Cache resolved field/option IDs here once discovered (`gh project field-list <N>
 (если не используется — секция игнорируется; см. CRM integration ниже)
 ```
 
-No separate init skill needed — this section is the setup. Title-type metadata is NOT configured here: it lives in labels, the parent tree, and Projects (see Issue title convention).
+`corp-init` is the bootstrap/repair skill for this config. Title-type metadata is NOT configured here: it lives in labels, the parent tree, and Projects (see Issue title convention).
 
 ## Iron invariants
 
@@ -132,9 +138,20 @@ All narrative elements in issue titles, body headers, and proposal text follow t
 ## Sources of truth (read every run)
 
 1. **`$TASKS_INDEX_PATH`** (if configured) — current week index. Source for: what's hot this week, what tracks are active, repo pointers for each track. Read FIRST to frame the session.
-2. **GitHub issues across `$YOUR_OWNER/*`** — authoritative for individual tasks. Search via `gh search issues --owner $YOUR_OWNER` or batched GraphQL (see below).
-3. **GitHub Project board(s)** — authoritative for what's active this week and in which lane.
-4. **CRM artifacts** (if CRM integration enabled in config) — meeting cards, opportunity cards, person cards. NOT a substitute for a GH issue, but the linkage anchor: every comm-related issue body must include a CRM pointer.
+2. **`$TASKS_DIR/WNN/YYYY-MM-DD.md`** (if configured) — current day plan. Source for: what the founder is actually doing today. Manager may patch it during write sync when touched issues change state.
+3. **GitHub issues across `$YOUR_OWNER/*`** — authoritative for individual tasks. Search via `gh search issues --owner $YOUR_OWNER` or batched GraphQL (see below).
+4. **GitHub Project board(s)** — authoritative for what's active this week and in which lane.
+5. **CRM artifacts** (if CRM integration enabled in config) — meeting cards, opportunity cards, person cards. NOT a substitute for a GH issue, but the linkage anchor: every comm-related issue body must include a CRM pointer.
+
+### Planning / retro cycle
+
+Manager participates in the cycle, it does not replace it:
+
+- `weekly-retro` reviews the closing week, resolves carry-over, and produces evidence-backed outcomes/backlog.
+- `weekly-planning` curates `tasks.md`, `tasks/WNN/README.md`, and day plans for the new week.
+- `manager` keeps GitHub issues, Projects, parents, W-labels, work-record comments, and touched day-plan rows consistent during actual work.
+
+When a manager sync changes task state, it must keep the visible plan aligned with that state. If manager closes an issue, the closed issue must not remain as an active P0/P1 row in the current day plan or week index.
 
 ## When to use vs when NOT
 
@@ -162,7 +179,7 @@ Keep pre-flight silent and minimal. Do not dump tasks index content, full git st
    ```bash
    gh project item-list <WEEKLY_PROJECT> --owner $YOUR_OWNER --format json --limit 1000 > /tmp/manager-proj.json
    ```
-3. **Task drift guard.** If the current day or week plan contains an active task row with no `repo#N` GitHub issue reference → surface as `Task drift: <row> — no GitHub issue`. In read mode: report only. In write mode: find an existing issue or create one (then it carries the iron invariants). Manager does not rewrite the tasks index itself — index curation is the `weekly-planning` skill's job.
+3. **Task drift guard.** If the current day or week plan contains an active task row with no `repo#N` GitHub issue reference → surface as `Task drift: <row> — no GitHub issue`. In read mode: report only. In write mode: find an existing issue or create one (then it carries the iron invariants).
 4. Check git status of relevant repos (silently). If specific artifacts referenced in session are uncommitted, mention only those by name in proposal.
 5. Compute current ISO week if tasks index "Updated" line is stale (>7 days) or absent.
 
@@ -199,7 +216,7 @@ In write mode, for each touched issue:
 3. Ensure **W-label + parent (Sub-issues API) + Project placement**, and set the Project status lane to `In progress` (see Project status sync).
 4. Record **commit↔issue linkage** (see below).
 
-**Authorization mode** (from your CLAUDE.md config):
+**Authorization mode** (from your `AGENTS.md` / `CLAUDE.md` config):
 
 - `ask-each-time` (default): after the plan, ask "execute?" before any GitHub write.
 - `execute-after-plan`: after the silent pre-flight and brief execution plan, execute scoped GitHub writes without asking a separate confirmation. Still run pre-flight, search existing issues, preserve invariants, and report exactly what changed.
@@ -468,6 +485,18 @@ For each domain board, read its field list first — lane names may differ (`In 
 **Project drift rules:**
 - Issue in Project with empty Status field → surface as `Project drift: status lane empty`.
 - If a GraphQL/rate-limit error blocks the status edit → report `Project drift: placement ok, status lane pending` and do not claim full repair.
+
+## Plan cleanup on close
+
+When manager closes an issue in write mode, it must remove that issue from active planning surfaces in the same sync:
+
+1. Read `$TASKS_INDEX_PATH`, current week README, and today's day file if configured.
+2. If the closed issue appears as an active P0/P1 row, remove the row or replace it with the next open child issue under the same parent.
+3. If the closed issue appears in a weekly/index issue list, remove it when no open work remains for that scope. If the parent remains active, keep the parent and open children.
+4. Do not delete historical retro/outcomes evidence. Append a note only when the plan file has a current "Done / Closed today" section; otherwise keep the active plan clean.
+5. In the result report, show the cleanup explicitly: `removed closed issue from day plan: repo#N`.
+
+If manager did not close the issue itself, read mode reports drift only. Do not clean plans for a closed issue unless the current sync is explicitly doing closure or the user asked for cleanup.
 
 ## W-label rules
 
@@ -802,7 +831,7 @@ When a track has a multi-level epic hierarchy (root → lanes/children → grand
 | N×`gh issue view` one-by-one | Use batched GraphQL; single calls are a pointed fallback only. |
 | Closing/syncing after real work without a work-record comment | Iron invariant 6 — add the timeline comment. |
 | Not respecting the public-repo gate | Before writing to a public repo, do not add private / CRM / personal details; if unsure — surface in proposal and ask. |
-| Treating tasks index as a task list to mutate | The tasks index is read-only context for manager. Index is curated by user / `weekly-planning`. |
+| Treating tasks index as a general task list to mutate | The index is curated by user / `weekly-planning`; manager only patches rows for touched issues, closure cleanup, and explicit drift repair. |
 | Acting on uncommitted local changes as "done" | Surface uncommitted work in the report; don't link a not-yet-pushed artifact. |
 | Silently filtering false-positive matches | Drop from primary results but show in `IGNORED (false positives)`. |
 | Treating every invocation as write mode | Check first: artifacts (write) OR question about state (read)? Use the mode resolution diagram. |
@@ -818,7 +847,7 @@ When a track has a multi-level epic hierarchy (root → lanes/children → grand
 - **Markdown `Parent: #N` / `Epic: #N` in body when parent is set via API** — duplicate, goes stale.
 - **Treating prose as Project-placement evidence** — use live `projectItems` reads, not "should be on the board".
 - **Auto-closing stale issues** — never. Surface to user, leave open.
-- **Mutating tasks index** — manager is read-only on it.
+- **Broadly rewriting tasks index** — manager only patches rows for touched issues, closure cleanup, and explicit drift repair. Weekly structure belongs to `weekly-planning`.
 - **Silent skip on tasks-index drift** — surface explicitly so the user can re-curate.
 - **Silent skip on epic stale-open** — epic with 100% sub-issues done but `state = open` is a real signal; surface as candidate-to-close, never auto-close.
 - **Single mega-comment dumping whole session** — one comment per issue, scoped to that issue's track.
@@ -832,7 +861,7 @@ When a track has a multi-level epic hierarchy (root → lanes/children → grand
 
 ## CRM integration (optional)
 
-Activate by setting `crm_path` and `crm_pointer_format` in your CLAUDE.md config.
+Activate by setting `crm_path` and `crm_pointer_format` in your `AGENTS.md` / `CLAUDE.md` config.
 
 When CRM integration is enabled, every commercial / communication-related issue body must include a pointer to the corresponding CRM artifact (person card, opportunity card, meeting note). Default pointer format is `[[<slug>]]` (Obsidian wiki-link style), but you can configure any format your CRM uses.
 
