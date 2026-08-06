@@ -27,11 +27,11 @@ Agent rules are a plain text file sitting in a folder. No magic: text you read w
 
 Such a file lives in every folder, and its content differs.
 
-![Every folder carries its own rules file: the HQ sees the whole system, a department sees only its domain](docs/images/rules-place.png)
+![Every folder carries its own rules file: the HQ sees the whole system, a department sees only its domain](docs/images/rules-place-en.png)
 
 Opening a folder, the agent learns three things from that file.
 
-![What the agent learns: who works here, in which order to read, where the truth lives](docs/images/rules-inside.png)
+![What the agent learns: who works here, in which order to read, where the truth lives](docs/images/rules-inside-en.png)
 
 Those three answers replace a long prompt. The agent gets them from the folder instead of your message, so you stop explaining the same thing every time.
 
@@ -45,7 +45,7 @@ Everything else follows from that: for this to work, context has to leave your h
 
 A department is a folder that owns one domain and accumulates experience about it. Inside it has its own rules, its own tasks, and its own skills.
 
-![A department: one domain next to the HQ with its own rules, tasks and skills](docs/images/department.png)
+![A department: one domain next to the HQ with its own rules, tasks and skills](docs/images/department-en.png)
 
 ### Which departments people start with
 
@@ -66,7 +66,7 @@ A department exists for repetition. Work that happened once is fine living in th
 
 A skill is a written-down way of working that can be repeated. You walk the work by hand once, write the steps down, and from then on the agent runs them.
 
-![A skill: your phrase, a line in the folder rules, the steps, the result](docs/images/skill.png)
+![A skill: your phrase, a line in the folder rules, the steps, the result](docs/images/skill-en.png)
 
 ## Four layers and who lives where
 
@@ -124,7 +124,7 @@ The same word gives a different result depending on the folder: "retro" inside a
 
 ## Three levels of task tracking
 
-![Three levels of tasks: one list, day separate from long work, a shared tracker](docs/images/tasks.png)
+![Three levels of tasks: one list, day separate from long work, a shared tracker](docs/images/tasks-en.png)
 
 ## Templates
 

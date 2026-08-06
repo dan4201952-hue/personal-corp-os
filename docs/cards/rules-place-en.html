@@ -1,0 +1,34 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>:root{--bg:#f5f4ef;--ink:#1a1a1a;--muted:#77736b;--hair:#d4d2cc;--paper-soft:#eeece4;--font-main:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--font-mono:ui-monospace,"SF Mono",Menlo,monospace;}</style>
+</head><body class="m-0 bg-[var(--bg)] text-[var(--ink)] font-[var(--font-main)] text-[15px] leading-[1.55]">
+<main class="w-[1000px] px-10 py-9">
+
+<p class="text-[11px] uppercase tracking-[0.14em] text-[var(--muted)] m-0">Agent rules</p>
+<h1 class="text-[26px] font-semibold mt-2 mb-6">Every folder carries its own rules file</h1>
+<div class="grid grid-cols-3 gap-6">
+  <div class="border border-[var(--hair)] bg-[var(--paper-soft)] p-5">
+    <p class="text-[11px] uppercase tracking-[0.12em] text-[var(--muted)] m-0">HQ</p>
+    <p class="font-[var(--font-mono)] text-[15px] mt-2 mb-4">HQ</p>
+    <p class="border border-[var(--ink)] bg-[var(--bg)] px-3 py-2 font-[var(--font-mono)] text-[14px] m-0">AGENTS.md</p>
+    <p class="text-[13px] text-[var(--muted)] mt-3 mb-0">Map of the whole system: which departments exist, where to find a given fact</p>
+  </div>
+  <div class="border border-[var(--hair)] bg-[var(--paper-soft)] p-5">
+    <p class="text-[11px] uppercase tracking-[0.12em] text-[var(--muted)] m-0">Department</p>
+    <p class="font-[var(--font-mono)] text-[15px] mt-2 mb-4">content</p>
+    <p class="border border-[var(--ink)] bg-[var(--bg)] px-3 py-2 font-[var(--font-mono)] text-[14px] m-0">AGENTS.md</p>
+    <p class="text-[13px] text-[var(--muted)] mt-3 mb-0">One domain only: its tasks, its materials, its skills</p>
+  </div>
+  <div class="border border-[var(--hair)] bg-[var(--paper-soft)] p-5">
+    <p class="text-[11px] uppercase tracking-[0.12em] text-[var(--muted)] m-0">Department</p>
+    <p class="font-[var(--font-mono)] text-[15px] mt-2 mb-4">sales</p>
+    <p class="border border-[var(--ink)] bg-[var(--bg)] px-3 py-2 font-[var(--font-mono)] text-[14px] m-0">AGENTS.md</p>
+    <p class="text-[13px] text-[var(--muted)] mt-3 mb-0">People, agreements, deal status</p>
+  </div>
+</div>
+<div class="border-t-2 border-[var(--ink)] mt-8 pt-5">
+  <p class="m-0 text-[15px]">I open the agent in the HQ folder, it reads the HQ rules and sees the whole system.</p>
+  <p class="m-0 text-[15px] mt-1">I open it in a department folder, it reads the department rules and sees that domain only.</p>
+</div>
+
+</main></body></html>
