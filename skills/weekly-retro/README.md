@@ -12,11 +12,12 @@ Weekly reviews for solo founders are chaotic — no structure, facts get lost, a
 
 Agent-driven retrospective in 6 phases:
 - **Gather data** — git commits, GitHub issues, previous retro carry-over
-- **Interview** — structured conversation, one topic at a time, write immediately
+- **Interview** — structured conversation plus a fact-first pass through every configured Work Area
 - **Advisory analysis** — optional parallel analysis by 3 sub-agents
 - **Compile summary** — done / in progress / not touched / lessons
 - **Create backlog** — issues routed to correct repos with `retro:WNN` labels
 - **Wrap-up** — save summary, show diffs, commit on request
+- **Area handoff** — record one proposed next-week goal per Area for weekly-planning
 
 ## Installation
 
@@ -37,6 +38,7 @@ Add a `## Weekly Retro Config` section to your project's `CLAUDE.md` with:
 | Retro log path | Where summaries are saved |
 | Task routing | Map task types to repos |
 | Interview topics | Ordered list of areas to cover |
+| Work Areas | Stable responsibility lenses; each has a name, goal, and optional habit set |
 
 See `SKILL.md` for the full config template.
 
@@ -47,6 +49,8 @@ See `SKILL.md` for the full config template.
 - Duplicate detection before creating issues
 - Multi-topic response handling
 - Retro/planning mode separation
+- Area Interviews: material change, evidence-backed system improvement, and proposed next-week goal
+- Explicit `Area Goals` handoff to the living weekly plan
 - Red flags that stop the agent from bad habits
 
 ## See Also

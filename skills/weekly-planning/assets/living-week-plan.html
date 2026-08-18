@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{WEEK_LABEL}} · Живой план недели</title>
+  <style>
+    :root {
+      --ink: #201e1b;
+      --muted: #7a746d;
+      --line: #ded7cc;
+      --paper: #f4f0e8;
+      --card: #fffdf9;
+      --today: #315f7f;
+      --shadow: 0 8px 24px rgba(38, 31, 23, .07);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: var(--paper); }
+    button, input { font: inherit; }
+    .serif { font-family: Georgia, "Times New Roman", serif; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .eyebrow { color: var(--muted); font: 700 12px/1.2 ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase; }
+
+    .masthead {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) auto;
+      gap: 24px;
+      align-items: end;
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(244, 240, 232, .95);
+      backdrop-filter: blur(12px);
+    }
+
+    h1 { margin: 5px 0 4px; font: 700 clamp(30px, 4vw, 54px)/.98 Georgia, serif; }
+    .subtitle { margin: 0; color: var(--muted); }
+    .clocks { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+    .clock { min-width: 132px; padding: 9px 11px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); }
+    .clock strong { display: block; font: 700 18px/1.1 ui-monospace, monospace; }
+    .clock span { color: var(--muted); font-size: 11px; }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-bottom: 1px solid var(--line);
+      background: var(--card);
+    }
+    .summary > section { min-height: 142px; padding: 24px 28px; border-right: 1px solid var(--line); }
+    .summary > section:last-child { border-right: 0; }
+    .summary h2 { margin: 8px 0; font: 700 25px/1.08 Georgia, serif; }
+    .summary p { margin: 0; color: #504b46; line-height: 1.5; }
+
+    .board-wrap { padding: 28px 0 28px 28px; overflow: hidden; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; padding-right: 28px; }
+    .section-head h2 { margin: 5px 0 0; font: 700 34px/1 Georgia, serif; }
+    .legend { color: var(--muted); font-size: 13px; }
+    .legend b { color: var(--today); }
+
+    .week-board {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(250px, 1fr));
+      gap: 12px;
+      min-width: 1834px;
+      margin-top: 18px;
+      padding: 2px 28px 12px 2px;
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+    }
+    .day {
+      min-height: 360px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 253, 249, .8);
+      box-shadow: var(--shadow);
+      scroll-snap-align: start;
+    }
+    .day.is-today { border: 2px solid var(--today); padding: 15px; }
+    .day.is-past { background: #ebe7df; box-shadow: none; }
+    .day.is-past .task { opacity: .72; }
+    .day-head { display: flex; align-items: start; justify-content: space-between; gap: 8px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+    .day h3 { margin: 3px 0 0; font: 700 25px/1 Georgia, serif; }
+    .day-state { padding: 5px 7px; border: 1px solid var(--line); border-radius: 7px; color: var(--muted); font: 11px/1 ui-monospace, monospace; }
+    .is-today .day-state { border-color: #b9cede; color: var(--today); background: #eef7fc; }
+    .is-past .day-state { color: #168044; background: #edf8f1; }
+    .task-list { display: grid; gap: 10px; padding-top: 12px; }
+    .task {
+      --area: #777;
+      padding: 12px 12px 10px;
+      border: 1px solid color-mix(in srgb, var(--area) 35%, var(--line));
+      border-left: 5px solid var(--area);
+      border-radius: 11px;
+      background: var(--card);
+    }
+    .task h4 { margin: 0 0 8px; font-size: 15px; line-height: 1.25; }
+    .task-meta { display: flex; justify-content: space-between; gap: 8px; color: var(--muted); font: 11px/1.3 ui-monospace, monospace; }
+    .placeholder { border-style: dashed; }
+    .placeholder h4 { color: var(--muted); font-weight: 600; }
+
+    .explorer-shell { display: grid; grid-template-columns: 310px minmax(0, 1fr); gap: 18px; padding: 0 28px 40px; }
+    .panel { border: 1px solid var(--line); border-radius: 18px; background: var(--card); box-shadow: var(--shadow); }
+    .filters { padding: 20px; }
+    .filters h2, .explorer h2 { margin: 6px 0 8px; font: 700 30px/1 Georgia, serif; }
+    .filter-list { display: grid; gap: 7px; margin-top: 18px; }
+    .filter {
+      display: grid;
+      grid-template-columns: 12px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: #4c4843;
+      background: #fff;
+      text-align: left;
+      cursor: pointer;
+    }
+    .filter[aria-pressed="true"] { color: white; border-color: var(--ink); background: var(--ink); }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--area, var(--ink)); }
+    .count { font: 12px/1 ui-monospace, monospace; }
+
+    .explorer { min-height: 440px; padding: 24px; }
+    .explorer-top { display: flex; justify-content: space-between; gap: 18px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+    .area-goal { max-width: 600px; color: #514b45; line-height: 1.45; }
+    .area-goal strong { color: var(--ink); }
+    .explorer-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }
+    .empty { grid-column: 1 / -1; padding: 48px 20px; border: 1px dashed var(--line); border-radius: 12px; color: var(--muted); text-align: center; }
+
+    .wealth { display: none; margin-top: 18px; }
+    .wealth.is-visible { display: block; }
+    .habit-progress { margin-bottom: 14px; color: var(--muted); }
+    .habit-week { display: grid; grid-template-columns: repeat(7, minmax(104px, 1fr)); gap: 8px; overflow-x: auto; }
+    .habit-day { padding: 11px; border: 1px solid var(--line); border-radius: 10px; background: #fbfaf6; }
+    .habit-day strong { display: block; margin-bottom: 9px; }
+    .habit-day label { display: flex; gap: 7px; align-items: center; margin: 7px 0; font-size: 13px; cursor: pointer; }
+    .habit-day input { accent-color: #65758b; }
+    .privacy-note { margin: 14px 0 0; color: var(--muted); font-size: 12px; }
+
+    @media (max-width: 760px) {
+      .masthead { grid-template-columns: 1fr; position: static; }
+      .clocks { justify-content: flex-start; }
+      .summary { grid-template-columns: 1fr; }
+      .summary > section { min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); }
+      .explorer-shell { grid-template-columns: 1fr; }
+      .explorer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div>
+      <div class="eyebrow">Living weekly plan · {{WEEK_LABEL}}</div>
+      <h1>Вся неделя · {{WEEK_RANGE}}</h1>
+      <p class="subtitle">Прошлое сохраняется с фактом, сегодня движется, будущее остаётся планом.</p>
+    </div>
+    <div class="clocks" aria-label="Часовые пояса">
+      <div class="clock" data-clock="Europe/Berlin"><strong>--:--:--</strong><span>Central Europe</span></div>
+      <div class="clock" data-clock="Europe/Moscow"><strong>--:--:--</strong><span>Moscow</span></div>
+      <div class="clock" data-clock="America/Argentina/Buenos_Aires"><strong>--:--:--</strong><span>Buenos Aires</span></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="summary" aria-label="Сводка недели">
+      <section>
+        <div class="eyebrow">Обещания недели</div>
+        <h2 data-outcome-progress>0 / 0 приняты</h2>
+        <p data-outcome-note>Добавьте принятые исходы недели и критерии проверки.</p>
+      </section>
+      <section>
+        <div class="eyebrow">Ближайший риск</div>
+        <h2 data-nearest-risk>Зафиксируйте риск</h2>
+        <p>Укажите сигнал, владельца и следующий проверяемый шаг.</p>
+      </section>
+      <section>
+        <div class="eyebrow">Следующие действия</div>
+        <h2>Сегодняшний фокус</h2>
+        <p data-next-actions>Daily обновляет этот блок из факта и актуального плана.</p>
+      </section>
+    </section>
+
+    <section class="board-wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Chronological task stream</div>
+          <h2>Неделя целиком</h2>
+        </div>
+        <div class="legend"><b>● Сегодня</b> · закрытые дни · будущий план</div>
+      </div>
+
+      <!-- daily:updated -->
+      <div class="mono" style="margin-top:10px;color:var(--muted);font-size:11px" data-updated-at>Обновлено {{UPDATED_AT}}</div>
+      <!-- /daily:updated -->
+
+      <!-- daily:kanban -->
+      <div class="week-board" data-week-board>
+        <article class="day" data-day="{{DAY_1_ISO}}">
+          <header class="day-head"><div><div class="eyebrow">День 1</div><h3>{{DAY_1_LABEL}}</h3></div><span class="day-state" data-day-state>План</span></header>
+          <div class="task-list">
+            <article class="task placeholder" data-area="delivery" data-placeholder="true"><h4>Пример: заменить задачей результата</h4><div class="task-meta"><span>Todo</span><span>Delivery</span></div></article>
+          </div>
+        </article>
+        <article class="day" data-day="{{DAY_2_ISO}}">
+          <header class="day-head"><div><div class="eyebrow">День 2</div><h3>{{DAY_2_LABEL}}</h3></div><span class="day-state" data-day-state>План</span></header>
+          <div class="task-list">
+            <article class="task placeholder" data-area="sales" data-placeholder="true"><h4>Пример: закрепить следующий шаг</h4><div class="task-meta"><span>Todo</span><span>Sales</span></div></article>
+          </div>
+        </article>
+        <article class="day" data-day="{{DAY_3_ISO}}">
+          <header class="day-head"><div><div class="eyebrow">День 3</div><h3>{{DAY_3_LABEL}}</h3></div><span class="day-state" data-day-state>План</span></header>
+          <div class="task-list">
+            <article class="task placeholder" data-area="systems" data-placeholder="true"><h4>Пример: проверить рабочий контур</h4><div class="task-meta"><span>Todo</span><span>Systems</span></div></article>
+          </div>
+        </article>
+        <article class="day" data-day="{{DAY_4_ISO}}">
+          <header class="day-head"><div><div class="eyebrow">День 4</div><h3>{{DAY_4_LABEL}}</h3></div><span class="day-state" data-day-state>План</span></header>
+          <div class="task-list"></div>
+        </article>
+        <article class="day" data-day="{{DAY_5_ISO}}">
+          <header class="day-head"><div><div class="eyebrow">День 5</div><h3>{{DAY_5_LABEL}}</h3></div><span class="day-state" data-day-state>План</span></header>
+          <div class="task-list"></div>
+        </article>
+        <article class="day" data-day="{{DAY_6_ISO}}">
+          <header class="day-head"><div><div class="eyebrow">День 6</div><h3>{{DAY_6_LABEL}}</h3></div><span class="day-state" data-day-state>План</span></header>
+          <div class="task-list"></div>
+        </article>
+        <article class="day" data-day="{{DAY_7_ISO}}">
+          <header class="day-head"><div><div class="eyebrow">День 7</div><h3>{{DAY_7_LABEL}}</h3></div><span class="day-state" data-day-state>План</span></header>
+          <div class="task-list"></div>
+        </article>
+      </div>
+      <!-- /daily:kanban -->
+
+      <!-- daily:day-slice -->
+      <div hidden data-daily-day-slice>Compatibility marker for daily updaters.</div>
+      <!-- /daily:day-slice -->
+    </section>
+
+    <section class="explorer-shell">
+      <aside class="panel filters">
+        <div class="eyebrow">Области работы</div>
+        <h2>Фильтр задач</h2>
+        <p class="subtitle">Одна карточка живёт на доске. Здесь меняется способ просмотра.</p>
+        <div class="filter-list" data-filter-list></div>
+      </aside>
+
+      <section class="panel explorer">
+        <div class="explorer-top">
+          <div>
+            <div class="eyebrow">Task explorer</div>
+            <h2 data-area-title>Все области</h2>
+          </div>
+          <div class="area-goal"><strong>Цель области:</strong> <span data-area-goal>видеть вклад каждой области в исходы недели.</span></div>
+        </div>
+        <div class="explorer-grid" data-explorer-grid></div>
+
+        <section class="wealth" data-wealth>
+          <div class="habit-progress"><strong data-habit-progress>0 / 14</strong> отметок за {{WEEK_LABEL}}</div>
+          <div class="habit-week">
+            <div class="habit-day"><strong>{{DAY_1_LABEL}}</strong><label><input type="checkbox" data-habit="{{DAY_1_ISO}}:sport"> Спорт</label><label><input type="checkbox" data-habit="{{DAY_1_ISO}}:reflection"> Рефлексия</label></div>
+            <div class="habit-day"><strong>{{DAY_2_LABEL}}</strong><label><input type="checkbox" data-habit="{{DAY_2_ISO}}:sport"> Спорт</label><label><input type="checkbox" data-habit="{{DAY_2_ISO}}:reflection"> Рефлексия</label></div>
+            <div class="habit-day"><strong>{{DAY_3_LABEL}}</strong><label><input type="checkbox" data-habit="{{DAY_3_ISO}}:sport"> Спорт</label><label><input type="checkbox" data-habit="{{DAY_3_ISO}}:reflection"> Рефлексия</label></div>
+            <div class="habit-day"><strong>{{DAY_4_LABEL}}</strong><label><input type="checkbox" data-habit="{{DAY_4_ISO}}:sport"> Спорт</label><label><input type="checkbox" data-habit="{{DAY_4_ISO}}:reflection"> Рефлексия</label></div>
+            <div class="habit-day"><strong>{{DAY_5_LABEL}}</strong><label><input type="checkbox" data-habit="{{DAY_5_ISO}}:sport"> Спорт</label><label><input type="checkbox" data-habit="{{DAY_5_ISO}}:reflection"> Рефлексия</label></div>
+            <div class="habit-day"><strong>{{DAY_6_LABEL}}</strong><label><input type="checkbox" data-habit="{{DAY_6_ISO}}:sport"> Спорт</label><label><input type="checkbox" data-habit="{{DAY_6_ISO}}:reflection"> Рефлексия</label></div>
+            <div class="habit-day"><strong>{{DAY_7_LABEL}}</strong><label><input type="checkbox" data-habit="{{DAY_7_ISO}}:sport"> Спорт</label><label><input type="checkbox" data-habit="{{DAY_7_ISO}}:reflection"> Рефлексия</label></div>
+          </div>
+          <p class="privacy-note">Отметки остаются только в localStorage этого браузера под ключом недели.</p>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const areas = {
+        delivery: { name: "Обучение и проведение", color: "#c8410c", goal: "довести обещанный результат до пользователя и закрыть хвост доставки." },
+        sales: { name: "Продажи, деньги и партнёрства", color: "#df7a00", goal: "создать проверяемое движение к выручке или следующему решению." },
+        systems: { name: "Системы, агенты и операции", color: "#0b83bd", goal: "снизить ручной труд и повысить надёжность рабочего контура." },
+        content: { name: "Контент и публичное знание", color: "#7c3aed", goal: "опубликовать полезный артефакт с понятным следующим действием." },
+        people: { name: "Люди и обязательства", color: "#e11d48", goal: "выполнить данные людям обещания и снять зависшие ожидания." },
+        strategy: { name: "Продукт и стратегия", color: "#16a05a", goal: "принять одно решение, которое уменьшает неопределённость." },
+        wealth: { name: "Wealth", color: "#65758b", goal: "поддерживать энергию через ежедневный спорт и рефлексию." }
+      };
+
+      const today = new Date();
+      const localIso = [today.getFullYear(), String(today.getMonth() + 1).padStart(2, "0"), String(today.getDate()).padStart(2, "0")].join("-");
+      document.querySelectorAll("[data-day]").forEach((day) => {
+        const state = day.querySelector("[data-day-state]");
+        if (day.dataset.day < localIso) {
+          day.classList.add("is-past");
+          state.textContent = "Закрыт";
+        } else if (day.dataset.day === localIso) {
+          day.classList.add("is-today");
+          state.textContent = "Сегодня";
+        }
+      });
+
+      const updateClocks = () => {
+        document.querySelectorAll("[data-clock]").forEach((clock) => {
+          clock.querySelector("strong").textContent = new Intl.DateTimeFormat("ru-RU", {
+            timeZone: clock.dataset.clock,
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false
+          }).format(new Date());
+        });
+      };
+      updateClocks();
+      window.setInterval(updateClocks, 1000);
+
+      const sourceTasks = [...document.querySelectorAll(".week-board .task")];
+      sourceTasks.forEach((task) => {
+        const area = areas[task.dataset.area] || areas.strategy;
+        task.style.setProperty("--area", area.color);
+      });
+
+      const filterList = document.querySelector("[data-filter-list]");
+      const explorer = document.querySelector("[data-explorer-grid]");
+      const wealth = document.querySelector("[data-wealth]");
+      const areaTitle = document.querySelector("[data-area-title]");
+      const areaGoal = document.querySelector("[data-area-goal]");
+
+      const renderArea = (areaId) => {
+        document.querySelectorAll(".filter").forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.areaFilter === areaId)));
+        const selected = areaId === "all" ? sourceTasks : sourceTasks.filter((task) => task.dataset.area === areaId);
+        const metadata = areaId === "all" ? { name: "Все области", goal: "видеть вклад каждой области в исходы недели." } : areas[areaId];
+        areaTitle.textContent = metadata.name;
+        areaGoal.textContent = metadata.goal;
+        explorer.replaceChildren();
+        selected.forEach((task) => explorer.append(task.cloneNode(true)));
+        explorer.querySelectorAll(".task").forEach((task) => {
+          task.style.setProperty("--area", (areas[task.dataset.area] || areas.strategy).color);
+        });
+        if (!selected.length) {
+          const empty = document.createElement("div");
+          empty.className = "empty";
+          empty.textContent = "В этой области пока нет карточек недели.";
+          explorer.append(empty);
+        }
+        wealth.classList.toggle("is-visible", areaId === "wealth");
+      };
+
+      const filterEntries = [["all", { name: "Все области", color: "#201e1b" }], ...Object.entries(areas)];
+      filterEntries.forEach(([id, area]) => {
+        const button = document.createElement("button");
+        button.className = "filter";
+        button.dataset.areaFilter = id;
+        button.setAttribute("aria-pressed", "false");
+        const count = id === "all" ? sourceTasks.length : sourceTasks.filter((task) => task.dataset.area === id).length;
+        button.innerHTML = `<span class="dot" style="--area:${area.color}"></span><span>${area.name}</span><span class="count">${count}</span>`;
+        button.addEventListener("click", () => renderArea(id));
+        filterList.append(button);
+      });
+      renderArea("all");
+
+      const storageKey = "{{HABIT_STORAGE_KEY}}";
+      const habits = [...document.querySelectorAll("[data-habit]")];
+      const progress = document.querySelector("[data-habit-progress]");
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem(storageKey) || "{}"); } catch (_) { saved = {}; }
+      habits.forEach((input) => {
+        input.checked = Boolean(saved[input.dataset.habit]);
+        input.addEventListener("change", () => {
+          saved[input.dataset.habit] = input.checked;
+          try { localStorage.setItem(storageKey, JSON.stringify(saved)); } catch (_) { /* local file privacy settings may block storage */ }
+          updateProgress();
+        });
+      });
+      function updateProgress() {
+        progress.textContent = `${habits.filter((input) => input.checked).length} / ${habits.length}`;
+      }
+      updateProgress();
+    })();
+  </script>
+</body>
+</html>

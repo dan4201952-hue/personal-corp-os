@@ -109,11 +109,13 @@ Three links on their own are a feature list. The rhythm turns them into a system
 ```mermaid
 graph LR
     R["retro<br/>what worked"] --> P["planning<br/>priorities of the week"]
-    P --> T["tasks<br/>into departments"]
+    P --> D["daily<br/>living full-week view"]
+    D --> T["tasks<br/>into departments"]
     T --> E["execution<br/>the trace goes back into the task"]
     E --> R
     style R fill:#f59e0b,color:#fff
     style P fill:#3b82f6,color:#fff
+    style D fill:#64748b,color:#fff
     style T fill:#8b5cf6,color:#fff
     style E fill:#10b981,color:#fff
 ```
@@ -121,6 +123,8 @@ graph LR
 The rhythm answers the question that usually stays unanswered: when exactly does experience turn into a rule. Answer: at the retro, once a week, not "someday".
 
 The same word gives a different result depending on the folder: "retro" inside a department means a slice of that department, "retro" in the HQ means a slice of the whole system. Folder rules win over general ones.
+
+Each generated department also includes a local `daily` skill. It refreshes the living `WNN-plan.html`: the whole ISO week stays visible, past days keep their facts, today is highlighted, future days remain the plan, and browser-only Wealth habits persist locally.
 
 ## Three levels of task tracking
 
@@ -151,8 +155,8 @@ After two such weeks the department has its own memory, and part of the decision
 |-------|-------------------|--------------|
 | [corp-doctor](./skills/corp-doctor/) | Loop, department, task | Diagnose and repair the loop, add a department, route a task |
 | [manager](./skills/manager/) | Execution | Sync session work into GitHub Issues and query cross-repo task state |
-| [weekly-retro](./skills/weekly-retro/) | Pattern into memory | Structured retrospective: gather data, interview founder, capture findings |
-| [weekly-planning](./skills/weekly-planning/) | Priority | Retro findings + backlog → prioritized outcomes with Eisenhower matrix |
+| [weekly-retro](./skills/weekly-retro/) | Pattern into memory | Facts, outcome scorecard, Area Interviews, and next-week Area goals |
+| [weekly-planning](./skills/weekly-planning/) | Priority | Outcomes, seven-day living plan, Area Explorer, clocks, and Wealth habits |
 
 ## Where this leads
 
@@ -221,8 +225,8 @@ Replace `cc-analytics` with any skill name from the table below.
 |---|---|
 | [corp-doctor](./skills/corp-doctor/) | One entry point to the loop: diagnose, repair, new department, task routing |
 | [manager](./skills/manager/) | Two-way bridge between the session and GitHub Issues, cross-repo status |
-| [weekly-retro](./skills/weekly-retro/) | Weekly retro: gather facts, interview the founder, capture findings |
-| [weekly-planning](./skills/weekly-planning/) | Retro findings and backlog become prioritized outcomes for the week |
+| [weekly-retro](./skills/weekly-retro/) | Weekly retro: facts, scorecard, Area Interviews, and proposed Area goals |
+| [weekly-planning](./skills/weekly-planning/) | Prioritized outcomes plus a living full-week view refreshed by department daily |
 
 ### From intent to tasks
 

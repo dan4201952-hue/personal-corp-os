@@ -1,6 +1,6 @@
 ---
 name: weekly-retro
-description: Use when conducting weekly retrospective, reviewing past week, or when user says "retro", "weekly retro", "week review". Triggers at end of week or start of new week.
+description: Use when the user is closing an ISO week, reviewing planned outcomes against evidence, interviewing work Areas, resolving unfinished commitments, or asking for "ретро", "weekly retro", "week review", or lessons from the week.
 ---
 
 # Weekly Retro
@@ -60,6 +60,16 @@ Ordered list of areas to cover:
 4. New initiatives
 5. Research / strategy
 6. Open question
+
+### Work Areas (customize names, goals, and colors)
+Each Area is a stable responsibility lens used by retro, planning, and the living weekly page:
+1. Delivery
+2. Sales
+3. Systems
+4. Content
+5. People
+6. Strategy
+7. Wealth (recovery habits such as sport and reflection)
 ```
 
 No separate init skill needed — this section is the setup. Copy the config block above into your `CLAUDE.md`, fill in your values, and the skill is ready.
@@ -242,6 +252,16 @@ Use the topics from your `CLAUDE.md` config. Default order:
 5. **Research / strategy** — what led to decisions, what's shelved
 6. **What we didn't cover** — open question
 
+### Area interviews
+
+After the topic pass, visit every configured Work Area. Show its observed task/activity facts first, then ask these three questions one at a time:
+
+1. What materially changed in this Area during the week?
+2. What system improvement is supported by repeated evidence?
+3. What should be the Area goal for the next week?
+
+Save the answers immediately under `## Area Interviews` in `WNN.md`. End with an `## Area Goals` table containing Area, observed fact, and proposed next-week goal. A proposed Area goal becomes a commitment only when weekly-planning accepts it as an outcome.
+
 ### Verify checklist (BEFORE each issue)
 
 ```bash
@@ -291,6 +311,9 @@ The summary is written to the same `$RETRO_LOG_PATH/WNN.md` that has been collec
 
 ### Lessons -> system updates
 | Lesson | What was updated |
+
+### Area goals for planning
+| Area | Observed fact | Proposed goal for next week |
 ```
 
 If you have 4+ retros with outcomes scorecards, add a trend row below the table:

@@ -1,6 +1,6 @@
 ---
 name: weekly-planning
-description: Use when transitioning from retro to weekly plan, prioritizing backlog, choosing outcomes for the week, or when user says "план на неделю", "планирование", "W13 plan", "outcomes", "приоритизация". Runs after weekly-retro skill.
+description: Use when the user is transitioning from a completed retro into a weekly plan, choosing weekly outcomes, scheduling a full ISO week, or asking for "план на неделю", "weekly planning", priorities, capacity, or outcomes.
 ---
 
 # Weekly Planning
@@ -45,8 +45,9 @@ digraph planning {
   outcomes [label="5. Choose outcomes"];
   issues [label="6. Create issues\nin correct repos"];
   board [label="7. Add to board\nwith W{NN} label"];
+  page [label="8. Create living\nweekly plan"];
 
-  collect -> calendar -> group -> eisenhower -> outcomes -> issues -> board;
+  collect -> calendar -> group -> eisenhower -> outcomes -> issues -> board -> page;
 }
 ```
 
@@ -149,6 +150,27 @@ gh project item-add $PROJECT_ID --owner $YOUR_OWNER --url $ISSUE_URL
 gh search issues --owner $YOUR_OWNER --label "W{NN}" --state open
 ```
 
+### 8. Create the living weekly plan
+
+Resolve the ISO week from the current local date. Never hardcode `W34` or copy the previous filename.
+
+```bash
+python3 skills/weekly-planning/scripts/living_week.py context --workspace . --json
+python3 skills/weekly-planning/scripts/living_week.py create --workspace .
+```
+
+The generator creates `reports/WNN-plan.html`. Before presenting it:
+
+1. Remove every element with `data-placeholder="true"`.
+2. Populate all seven day columns with accepted work; every task card has one `data-area`.
+3. Keep exactly one pair of `daily:updated`, `daily:kanban`, and hidden `daily:day-slice` markers. The local `daily` skill may replace only these marked regions.
+4. Mark past days as closed with the tasks and facts that actually happened. Highlight the current day. Keep future days as plan.
+5. Configure the three display time zones and the seven work Areas in the page script. Card color comes from Area metadata.
+6. Put the goal captured during retro/planning into each Area definition. The Area Explorer derives cards from the weekly board; it never stores a second task list.
+7. Keep Wealth as the recovery Area or rename it in config. Its daily habit checkboxes use a week-scoped localStorage key and must not be overwritten by agents.
+
+The HTML page is a mutable view. Issues/task records and `WNN-outcomes.md` remain sources of truth. Daily updates preserve the full ISO week and mutate only the marked regions.
+
 ## Red Flags — STOP
 
 - Creating all issues in one repo → WRONG, route to correct repo per config
@@ -160,6 +182,8 @@ gh search issues --owner $YOUR_OWNER --label "W{NN}" --state open
 - Doing execution work inside planning → finish planning first, execute separately
 - Asking the user for facts that are already available in sources → read sources first
 - Writing deadlines without checking the actual date → verify current date and week range
+- Replacing the entire plan during daily update → mutate only the marker regions and preserve browser habit state
+- Copying last week's filename or localStorage key → resolve the current ISO week with the generator
 
 ## Common Mistakes
 
@@ -185,7 +209,7 @@ This skill runs AFTER `weekly-retro`. Expected inputs:
 
 ## Setup
 
-This skill reads config from your project's `AGENTS.md` / `CLAUDE.md`. Run `corp-init` first to generate or repair the config block, or add manually:
+This skill reads config from your project's `AGENTS.md` / `CLAUDE.md`. Run `corp-doctor` first to generate or repair the config block, or add manually:
 
 ```markdown
 ## Agent Operations Config
@@ -207,6 +231,25 @@ routing:
     repo: owner/content-repo
   - pattern: "strategy, cross-cutting"
     repo: owner/main-repo
+
+### Living plan
+reports_dir: reports
+local_timezone: system
+display_timezones:
+  - Europe/Berlin
+  - Europe/Moscow
+  - America/Argentina/Buenos_Aires
+areas:
+  - delivery
+  - sales
+  - systems
+  - content
+  - people
+  - strategy
+  - wealth
+wealth_habits:
+  - sport
+  - reflection
 ```
 
 ## Quick Reference

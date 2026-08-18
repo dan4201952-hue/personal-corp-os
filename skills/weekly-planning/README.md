@@ -2,7 +2,7 @@
 
 ![Skill illustration](assets/illustration.png)
 
-A Claude Code skill for structured weekly planning. Turns retro findings + backlog into prioritized outcomes with clear delegation (founder vs agent).
+A Claude Code and Codex skill for structured weekly planning. It turns retro findings and backlog into prioritized outcomes, then renders a living full-week view that the local daily skill can refresh.
 
 ## Problem
 
@@ -10,12 +10,15 @@ Weekly planning without structure leads to reactive work, missed priorities, and
 
 ## Solution
 
-7-step process: collect tasks → map calendar → group by surface → Eisenhower split → choose outcomes → create issues → add to board.
+8-step process: collect tasks → map calendar → group by Area → Eisenhower split → choose outcomes → create issues → add to board → build the living weekly plan.
 
 - **Outcomes, not tasks** — "By Friday, X is true" format
 - **Delegation matrix** — founder judgment vs agent execution
 - **Correct routing** — issues land in the repo where work happens
 - **Config-driven** — reads repos, routing, project ID from CLAUDE.md
+- **Full ISO week** — closed past days, highlighted today, and future plan stay visible together
+- **Area Explorer** — one kanban source, filtered views, Area goals, and Area-colored cards
+- **Private browser habits** — Wealth checkboxes persist under a week-scoped localStorage key
 
 ## Installation
 
@@ -25,7 +28,7 @@ cp -r skills/weekly-planning ~/.claude/skills/
 
 ## Prerequisites
 
-Run `corp-init` first to generate or repair the config block in AGENTS.md / CLAUDE.md, or add manually:
+Run `corp-doctor` first to generate or repair the config block in AGENTS.md / CLAUDE.md, or add manually:
 
 ```markdown
 ## Agent Operations Config
@@ -50,14 +53,15 @@ routing:
 | 5. Outcomes | Define measurable results for the week |
 | 6. Issues | Create in correct repos with W{NN} label |
 | 7. Board | Add all to unified GitHub Project |
+| 8. Living plan | Resolve W{NN}, render seven days, Area views, clocks, and Wealth habits |
 
 ## Part of Personal Corp Framework
 
 ```
-corp-init → weekly-planning → work week → weekly-retro → repeat
+corp-doctor → weekly-retro → weekly-planning → local daily refreshes → repeat
 ```
 
 ## See Also
 
-- [corp-init](../corp-init/) — one-time setup or repair
+- [corp-doctor](../corp-doctor/) — workspace setup and health repair
 - [weekly-retro](../weekly-retro/) — structured weekly retrospective

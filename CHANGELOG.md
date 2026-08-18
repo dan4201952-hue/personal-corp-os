@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.1] - 2026-08-18
+
+### Added
+- **weekly-planning** now ships a deterministic ISO-week generator and a standalone living plan: seven visible days, real-time multi-zone clocks, Area-colored cards, a non-duplicating Area Explorer, and week-scoped Wealth habit state in localStorage.
+- Department `daily`, `planning`, and `retro` skills share marker, Area goal, and full-week mutation contracts.
+- Public regression checks cover W34/W35/W53 transitions, seven-day rendering, and 14 browser-local habit controls.
+
+### Changed
+- **weekly-retro** adds fact-first Area Interviews and an explicit `Area Goals` handoff to planning.
+- Bilingual docs describe the complete `retro → planning → daily` rhythm and point setup to `corp-doctor`.
+
 ## [4.0.0] - 2026-08-06
 
 ### Changed
