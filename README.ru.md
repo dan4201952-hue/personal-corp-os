@@ -259,7 +259,6 @@ Use Personal Corp skills to plan my week.
 | Скилл | Что делает |
 |---|---|
 | [art-director](./skills/art-director/) | Итеративный поиск визуального стиля с журналом процесса и графом решений |
-| [design-minimal](./skills/design-minimal/) | Одна HTML-страница в минимальном стиле: дашборд, бриф, раздатка, отчёт |
 | [html-draft](./skills/html-draft/) | Техническая диаграмма в стиле инженерного чертежа: архитектура, потоки |
 | [parallel-design-variants](./skills/parallel-design-variants/) | Параллельный отбор направлений через субагентов, галерея, голосование |
 

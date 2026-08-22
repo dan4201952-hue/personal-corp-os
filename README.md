@@ -257,7 +257,6 @@ Replace `cc-analytics` with any skill name from the table below.
 | Skill | What it does |
 |---|---|
 | [art-director](./skills/art-director/) | Iterative visual style search with a process log and a decision graph |
-| [design-minimal](./skills/design-minimal/) | One standalone HTML page: dashboard, brief, handout, report |
 | [html-draft](./skills/html-draft/) | One technical diagram in flat blueprint style: architecture, flows |
 | [parallel-design-variants](./skills/parallel-design-variants/) | Parallel bake-off through subagents, gallery, vote, then a mix |
 

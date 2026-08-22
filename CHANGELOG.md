@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.0.0] - 2026-08-22
+
+### Removed
+- **BREAKING** — removed the **design-minimal** skill from the public plugin. Use **html-draft** for standalone HTML diagrams and visual planning artifacts.
+
 ## [4.0.1] - 2026-08-18
 
 ### Added
