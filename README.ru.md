@@ -1,5 +1,8 @@
 # Personal Corp OS
 
+
+Manager берёт репозитории и доски из локального Manager Config; личные журналы рабочего пространства исключены из поставки.
+
 [![en](https://img.shields.io/badge/lang-en-blue.svg)](README.md)
 [![ru](https://img.shields.io/badge/lang-ru-green.svg)](README.ru.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)

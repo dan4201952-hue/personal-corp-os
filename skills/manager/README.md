@@ -1,5 +1,8 @@
 # Manager Skill
 
+
+Manager uses your local Manager Config for repositories and boards; the distributed skill contains no personal workspace logs.
+
 ![Skill illustration](assets/illustration.png)
 
 Bidirectional bridge between the current session and GitHub Issues. Part of the Personal Corp framework.
@@ -57,7 +60,7 @@ Use the path for your agent runtime. For plugin installs, use the repository plu
 
 ## Setup
 
-Add a `## Manager Config` section to your project's `AGENTS.md` (preferred) or `CLAUDE.md` (compatibility). If there is no agent config yet, run `corp-init` first.
+Add a `## Manager Config` section to your project's `AGENTS.md` (preferred) or `CLAUDE.md` (compatibility). If there is no agent config yet, run `corp-doctor` first.
 
 | Config | Purpose |
 |--------|---------|
@@ -130,6 +133,6 @@ The skill enforces invariants for every issue it touches — the base three alwa
 
 - [SKILL.md](SKILL.md) — full specification: write/read mode algorithms, parent epic rules, W-label rules, title convention, output templates
 - [README.ru.md](README.ru.md) — Russian version
-- `corp-init` — creates or repairs the manager config
+- `corp-doctor` — creates or repairs the manager config
 - `weekly-planning` — curates the week index and day plans
 - `weekly-retro` — reviews the closing week and produces evidence/backlog

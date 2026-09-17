@@ -1,5 +1,8 @@
 # Manager Skill
 
+
+Manager берёт репозитории и доски из локального Manager Config; личные журналы рабочего пространства исключены из поставки.
+
 ![Иллюстрация скилла](assets/illustration.png)
 
 Двусторонний мост между текущей сессией и GitHub Issues. Часть фреймворка Personal Corp.
@@ -57,7 +60,7 @@ cp -r skills/manager ~/.codex/skills/
 
 ## Настройка
 
-Добавь секцию `## Manager Config` в `AGENTS.md` проекта (предпочтительно) или `CLAUDE.md` (compatibility). Если agent config ещё нет, сначала запусти `corp-init`.
+Добавь секцию `## Manager Config` в `AGENTS.md` проекта (предпочтительно) или `CLAUDE.md` (compatibility). Если agent config ещё нет, сначала запусти `corp-doctor`.
 
 | Конфиг | Назначение |
 |--------|------------|
@@ -130,6 +133,6 @@ cp -r skills/manager ~/.codex/skills/
 
 - [SKILL.md](SKILL.md) — полная спецификация: алгоритмы write/read mode, parent epic rules, W-label rules, title convention, output templates
 - [README.md](README.md) — English version
-- `corp-init` — создаёт или чинит manager config
+- `corp-doctor` — создаёт или чинит manager config
 - `weekly-planning` — ведёт week index и day plans
 - `weekly-retro` — разбирает прошедшую неделю и даёт evidence/backlog

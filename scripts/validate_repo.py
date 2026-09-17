@@ -247,12 +247,33 @@ def validate_public_hygiene() -> None:
             fail(f"{path.relative_to(ROOT)} still contains legacy repo name {LEGACY_NAME}")
 
 
+def validate_manager_distribution() -> None:
+    manager = ROOT / "skills" / "manager"
+    allowed = {"SKILL.md", "README.md", "README.ru.md", "assets/illustration.png"}
+    for path in manager.rglob("*"):
+        if not path.is_file():
+            continue
+        if path.relative_to(manager).as_posix() not in allowed:
+            fail("manager contains an unreviewed distribution file")
+        if path.suffix == ".png":
+            continue
+        text = read(path)
+        patterns = (
+            r"/Users/[^/\s]+/", r"~/Documents/", r"PVT(?:I|SSF)?_",
+            r"github\.com/(?!your-github-handle(?:/|$))[^/\s]+/",
+            r"(?i)\bsereja" + r"ris\b", r"process-logs/",
+        )
+        if any(re.search(pattern, text) for pattern in patterns):
+            fail("manager contains workspace-specific distribution data")
+
+
 def main() -> None:
     skill_names = validate_skills()
     validate_archived_skills(skill_names)
     validate_readme_skill_links(skill_names)
     validate_plugin_metadata()
     validate_public_hygiene()
+    validate_manager_distribution()
     print(f"OK: validated {len(skill_names)} skills and public repo metadata")
 
 

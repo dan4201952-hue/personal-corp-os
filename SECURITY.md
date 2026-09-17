@@ -29,3 +29,6 @@ Expected response time: best effort within 7 days.
 - Use placeholders such as `<TOKEN>`, `<ORG>`, `<REPO>`, and `<CHAT_ID>`.
 - Keep private business data out of issues, pull requests, examples, fixtures,
   screenshots, and release notes.
+
+Public skill packages must exclude personal process logs and private workspace
+configuration. Manager resolves repositories and boards from local Manager Config.

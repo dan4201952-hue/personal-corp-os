@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.0.1] - 2026-09-17
+
+### Fixed
+- Restore the configurable public manager skill and remove workspace-specific references, templates, and process logs from its distribution.
+- Validate the manager package boundary to prevent personal workspace material from being bundled again.
+
 ## [5.0.0] - 2026-08-22
 
 ### Removed
