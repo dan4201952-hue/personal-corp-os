@@ -50,7 +50,7 @@ Prompt/program optimizers (GEPA, MIPROv2, TextGrad, Trace) need an evaluation se
   - retrieval selectively provides workflows to guide later generations [S].
 - Evidence: +24.6% and +51.1% relative success rate on Mind2Web and WebArena, with fewer steps on successful WebArena tasks [S, https://icml.cc/virtual/2025/poster/45496]; 35.6% SR on WebArena, SOTA at the time [P].
 
-**Dynamic Cheatsheet (DC).** Suzgun, Yuksekgonul, Bianchi, Jurafsky, Zou (Stanford) [S] https://arxiv.org/abs/2504.07952 (Apr 2025). EACL 2026 long paper [S, https://aclanthology.org/2026.eacl-long.333/]. Code: suzgunmirac/dynamic-cheatsheet [P, https://raw.githubusercontent.com/suzgunmirac/dynamic-cheatsheet/main/README.md].
+**Dynamic Cheatsheet (DC).** Suzgun, Yuksekgonul, Bianchi, Jurafsky, Zou [S] (Stanford; affiliation not verified in fetched sources) https://arxiv.org/abs/2504.07952 (Apr 2025). EACL 2026 long paper [S, https://aclanthology.org/2026.eacl-long.333/]. Code: suzgunmirac/dynamic-cheatsheet [P, https://raw.githubusercontent.com/suzgunmirac/dynamic-cheatsheet/main/README.md].
 - Stores: a persistent, evolving cheatsheet of "concise, transferable snippets rather than entire transcripts": strategies, code snippets, insights [P].
 - Update: a generator prompt, then a curator prompt that updates the sheet after each query. It needs "no ground-truth labels or human feedback" [P].
 - Variants [P]:
@@ -90,7 +90,7 @@ Prompt/program optimizers (GEPA, MIPROv2, TextGrad, Trace) need an evaluation se
   - 86.9% lower adaptation latency on average.
 - Later comparison: the 2026 AHE harness beat "self-evolving ACE and TF-GRPO baselines" on Terminal-Bench 2 [P, AHE README].
 
-**ReasoningBank.** Siru Ouyang, Jun Yan, I-Hung Hsu, … , Jiawei Han, Chen-Yu Lee, Tomas Pfister [P bibtex] (Google Cloud AI Research + UIUC co-authors; Google Research blog https://research.google/blog/reasoningbank-enabling-agents-to-learn-from-experience/ [S]). https://arxiv.org/abs/2509.25140 (Sep 2025). ICLR 2026 (OpenReview jL7fwchScm) [P]. Code: google-research/reasoning-bank, with WebArena and SWE-Bench code; the SWE part is built on mini-swe-agent [P, https://raw.githubusercontent.com/google-research/reasoning-bank/main/README.md].
+**ReasoningBank.** Siru Ouyang, Jun Yan, I-Hung Hsu, … , Jiawei Han, Chen-Yu Lee, Tomas Pfister [P bibtex] (Google Cloud AI Research + UIUC co-authors, affiliations partly inferred; Google Research blog https://research.google/blog/reasoningbank-enabling-agents-to-learn-from-experience/ [S]). https://arxiv.org/abs/2509.25140 (Sep 2025). ICLR 2026 (OpenReview jL7fwchScm) [P]. Code: google-research/reasoning-bank, with WebArena and SWE-Bench code; the SWE part is built on mini-swe-agent [P, https://raw.githubusercontent.com/google-research/reasoning-bank/main/README.md].
 - Stores: memory items {title, description, content} distilled from **self-judged successful and failed** trajectories. They abstract away low-level execution details and keep decision rationales and operational insights [S, https://www.emergentmind.com/papers/2509.25140].
 - Update: an LLM-as-a-judge provides the correctness signal (no GT) [P: `autoeval/` "llm-as-a-judge for obtaining correctness signal"]; items are extracted and added to the bank [S].
 - Retrieve: relevant memories are retrieved at test time to inform the new task [S].
@@ -125,7 +125,7 @@ Prompt/program optimizers (GEPA, MIPROv2, TextGrad, Trace) need an evaluation se
   - DeepSeek-V3.1-Terminus: AIME 2024 82.7%, AIME 2025 73.3%, i.e. +2.7 / +5.4 absolute over the ReAct baseline;
   - setup: 100 DAPO-Math-17K samples, 3 epochs, group size 5;
   - **~$18 learning cost, using ground truths**;
-  - with a few dozen samples it outperforms fine-tuned small LLMs, including out-of-domain on web search [S].
+  - it "significantly improves out-of-domain performance" on math and web search, and with a few dozen samples it outperforms fine-tuned small LLMs [S].
 - README version: "learns a token prior from ~100 samples for ~$8 RL runs" (DeepSeek-V3.2) and "+5.4% on AIME 2025" [P]. The $18 vs $8 figures refer to different model versions or runs.
 
 **Agent KB.** Xiangru Tang, Tianrui Qin, Tianhao Peng, … , Chi Wang, Wangchunshu Zhou [P] (OPPO PersonalAI repo). https://arxiv.org/abs/2507.06229 (Jul 2025). **ICML 2025 CFAgentic Workshop, Best Paper Runner-Up** [P, https://raw.githubusercontent.com/OPPO-PersonalAI/Agent-KB/master/README.md]. OpenReview entry https://openreview.net/forum?id=QCLXVOMkl4 (status not verified).
@@ -137,13 +137,13 @@ Prompt/program optimizers (GEPA, MIPROv2, TextGrad, Trace) need an evaluation se
   - automatically generated experiences match manual curation.
 - Evidence [S]:
   - GAIA with smolagents: pass@3 55.2→73.9 (+18.7 pp); Claude-3 on the hardest tasks 38.46→57.69; GPT-4 on intermediate tasks 53.49→73.26;
-  - **SWE-bench: OpenHands pass@1 24.3→28.3 (+4.0 pp); Claude-3 41.33→53.33**. Repo scripts use SWE-bench Lite / Agentless with "hints" [P].
+  - **SWE-bench: OpenHands pass@1 24.3→28.3 (+4.0 pp); Claude-3 41.33→53.33**. Repo scripts run Agentless-based pipelines with "hints" (location hints, RepoClassBench hints) [P]. The SWE-bench split is not stated in the README.
 
 **GEPA (Genetic-Pareto reflective prompt evolution).** Agrawal et al. [S, https://mlanthology.org/iclr/2026/agrawal2026iclr-gepa/] https://arxiv.org/abs/2507.19457 (Jul 2025). **ICLR 2026 Oral** [S, https://iclr.cc/virtual/2026/oral/10009494]. Code: gepa-ai/gepa; also inside DSPy [P, https://raw.githubusercontent.com/gepa-ai/gepa/main/README.md].
 - Stores: a pool / **Pareto frontier** of candidate text artifacts (prompts, code, agent architectures) with per-instance scores [P].
 - Update loop [P]:
   1. select a candidate from the Pareto front (candidates that excel on different task subsets);
-  2. run it on a minibatch;
+  2. execute it and collect execution traces;
   3. a reflection LM reads full traces (errors, profiler output, reasoning logs) plus "Actionable Side Information" and diagnoses failures;
   4. propose a targeted mutation;
   5. **accept only if improved**;
@@ -356,7 +356,7 @@ Every credible system keeps the evaluator, the lineage/provenance and the protec
 
 **AlphaEvolve / OpenEvolve.**
 - AlphaEvolve (Google DeepMind, May 2025): https://deepmind.google/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/. Results repo google-deepmind/alphaevolve_results, containing discovered constructions and verification code [P, https://raw.githubusercontent.com/google-deepmind/alphaevolve_results/main/README.md].
-  - Mechanism: an evolutionary coding agent. Gemini models propose program diffs, and **automated evaluators verify and score** them [S].
+  - Mechanism: an evolutionary coding agent. Gemini models propose program changes, and **automated evaluators verify and score** them [S].
   - Evidence [S, DeepMind blog via search; https://www.infoq.com/news/2025/05/google-alpha-evolve/]:
     - a Borg scheduling heuristic recovering **0.7% of Google's fleet compute**;
     - a **23% speedup** of a Gemini matmul kernel, giving **1% less training time**;
@@ -374,7 +374,7 @@ Every credible system keeps the evaluator, the lineage/provenance and the protec
 - Mechanism: a proposer *agent* reads a filesystem holding all prior candidates' code, traces and scores, and writes a new harness. It reads a median of **82 files per iteration**: 41% source code, 40% traces, 6% score summaries. Its access is non-Markovian [S, https://arxiv.org/html/2603.28052v1].
 - The shipped examples "assume **Claude Code as the proposer agent**" [P].
 - Evidence:
-  - Terminal-Bench 2.0: **76.4% with Claude Opus 4.6** (89 tasks × 5 trials) [P, https://raw.githubusercontent.com/stanford-iris-lab/meta-harness-tbench2-artifact/main/README.md], #2 overall;
+  - Terminal-Bench 2.0: **76.4% with Claude Opus 4.6** (89 tasks × 5 trials) [P, https://raw.githubusercontent.com/stanford-iris-lab/meta-harness-tbench2-artifact/main/README.md], #2 overall [S];
   - 37.6% with Haiku 4.5, #1 among Haiku agents [S].
 - Discovered change: **environment bootstrapping**. A snapshot of cwd, files, available languages/tools and package managers is injected into the first prompt, which "saves 2–5 early exploration turns" [P].
 
@@ -506,9 +506,9 @@ Episodic memory for SWE tasks is fragile when stored as raw trajectories (CTIM-R
 - Mechanism [P]:
   - SWE-smith mines real commits of the target repo, injects bugs and produces "hundreds of verifiable task instances" (problem statement, Docker environment, tests);
   - GEPA `optimize_anything` starts from empty skills and runs the agent (mini-SWE-agent + gpt-5-mini) on batches;
-  - pass/fail results, traces and test output go to a reflection model (default gpt-5.2-pro);
+  - pass/fail results, traces and test output go to a reflection model (default `--reflection-model` gpt-5.2-pro);
   - the output is `best_skills.txt`, injected into the system prompt;
-  - defaults: train 200 / val 50 / test 100, `max-metric-calls` 600.
+  - the README's example full run uses train 200 / val 50 / test 100 and `--max-metric-calls 600`; these are example settings, not verified defaults.
 - Evidence [S, blog]: repo-specific skills raised mini-SWE-agent resolve rate **55%→82% on Jinja and 24%→93% on Bleve**.
 - **Transfer to Claude Code**: Claude Haiku 4.5 **79.3%→100% on Bleve "while running faster"** and **93.9%→98.5% on Jinja**; also improved with Sonnet 4.5.
 
@@ -609,7 +609,7 @@ Further 2026 coding-skill papers, existence only [L]:
   - Fix: *selective addition* plus *combined deletion* policies gave an average **+10% absolute** over baseline policies.
 - *LEGOMem*: **AAMAS 2026** [S, https://dl.acm.org/doi/10.65109/VLUA1303; https://arxiv.org/abs/2510.04851; Microsoft Research].
   - Mechanism: trajectories are decomposed into **full-task memories for the orchestrator** (task description + high-level plan) and **subtask memories for task agents**.
-  - Findings on OfficeBench: **orchestrator memory is critical for decomposition and delegation**, while agent memory improves execution accuracy. Smaller models benefit most; steps and step-failure rate went down.
+  - Findings on OfficeBench: **orchestrator memory is critical for decomposition and delegation**, while agent memory improves execution accuracy. Smaller models benefit substantially, narrowing the gap to stronger agents; steps and step-failure rate went down.
 - *Agentic Plan Caching*: **NeurIPS 2025** [S, https://proceedings.neurips.cc/paper_files/paper/2025/hash/9549f7d06700f0966d5f938f1d11022a-Abstract-Conference.html; https://arxiv.org/abs/2506.14852].
   - Mechanism: extract plan templates from completed runs, match new requests by keywords, and adapt the template with a lightweight model.
   - Evidence: **−46.62% cost on average while maintaining performance**; another paper version reports −50.31% cost and −27.28% latency.
@@ -687,7 +687,7 @@ Cost increases come from:
 | Memento | GAIA | → 87.88% val Pass@3 / 79.40% test | small memory best (K=4) | [P] Memento README |
 | Training-Free GRPO | AIME24 / 25 (DeepSeek-V3.1-Terminus) | ReAct → +2.7 / +5.4 (82.7 / 73.3) | **~$18** learning, 100 samples, GT (README: ~$8 on V3.2) — ↓ vs RL fine-tuning, ↑ vs no learning | [S] https://arxiv.org/html/2510.08191v1 ; [P] youtu-agent README |
 | Agent KB (ICML'25 WS) | GAIA (smolagents pass@3) | 55.2 → 73.9 | retrieval + refine calls (↑) | [S] https://arxiv.org/html/2507.06229v5 |
-| Agent KB | SWE-bench (Lite) | OpenHands 24.3 → 28.3; Claude-3 41.33 → 53.33 | — | [S] same |
+| Agent KB | SWE-bench (split not verified) | OpenHands 24.3 → 28.3; Claude-3 41.33 → 53.33 | — | [S] same |
 | GEPA (ICLR'26 oral) | 6 tasks | GRPO → +6 pp avg (≤ +19); MIPROv2 → > +10 pp | **up to 35× fewer rollouts than GRPO**; 100–500 evals | [S] https://arxiv.org/pdf/2507.19457 ; [P] GEPA README |
 | GEPA | AIME 2025 (GPT-4.1 Mini) | 46.6 → 56.6 | — | [P] GEPA README |
 | MIPROv2 (EMNLP'24) | 7 LM programs (Llama-3-8B) | baseline optimizers → up to +13% (5 of 7) | many evaluations (↑) | [S] https://aclanthology.org/2024.emnlp-main.525/ |
@@ -698,7 +698,7 @@ Cost increases come from:
 | SkillWeaver | WebArena / 57 live sites | GPT-4o 22.6 → 29.8; 40.2 → 56.2 | exploration phase (e.g. 160 iterations) ↑ one-off | [S] https://arxiv.org/abs/2504.07079 ; [P] README |
 | SICA (ICLR'25 WS) | SWE-bench Verified, random 50 | 17% → 53% | slightly **less time per problem** (↓); run cost not reported | [S] https://www.emergentmind.com/topics/self-improving-coding-agent-sica |
 | DGM (ICLR'26) | SWE-bench / Polyglot | initial agent 20.0 → 50.0; 14.2 → 30.7 | **~$22,000 per SWE-bench run** (vs ~$10k baselines) (↑↑) | [S] https://arxiv.org/pdf/2505.22954 |
-| HGM (ICLR'26 oral) | SWE-bench Verified-60 / Polyglot | DGM → comparable or better; human-level on Lite | **2.38× / 6.86× fewer CPU-hours than DGM** (↓) | [S] https://arxiv.org/abs/2510.21614 |
+| HGM (ICLR'26 oral) | SWE-bench Verified-60 / Polyglot (+ SWE-bench Lite) | DGM → human-level coding-agent design on Lite (GPT-5) | **2.38× / 6.86× fewer CPU-hours than DGM** (↓) | [S] https://arxiv.org/abs/2510.21614 |
 | Live-SWE-agent | SWE-bench Verified / Pro | → 79.2% (Opus 4.5), 77.4% (Gemini 3 Pro); 45.8% Pro | "zero offline cost", 0.02–0.12 per-task overhead (unit unclear) | [P] README; [S] https://arxiv.org/abs/2511.13646 |
 | SE-Agent (NeurIPS'25) | SWE-bench Verified | → 80% Top-1 among open-source frameworks | several trajectories per issue (↑) | [P] README |
 | AlphaEvolve (DeepMind) | Google infrastructure | → 0.7% fleet compute recovered; 23% kernel speedup (1% training time); 32.5% FlashAttention | evolutionary compute not disclosed | [S] https://www.infoq.com/news/2025/05/google-alpha-evolve/ |
@@ -707,7 +707,7 @@ Cost increases come from:
 | AHE | Terminal-Bench 2 (GPT-5.4) | 69.7 → 77.0 pass@1 (Codex hand-written 71.9) | ~10M-token traces distilled per iteration (↑ search) | [P] AHE README |
 | Self-Harness | Terminal-Bench 2.0 | MiniMax M2.5 42.2 → 53.9; Qwen3.5-35B-A3B 18.0 → 36.7; GLM-5 46.1 → 57.0 | — | [P] README |
 | AutoSaddler (NeurIPS'26) | SWE-Bench Pro (SWE-agent) / TB2 (Terminus 2) | 37.3 → 46.9; 40.0 → 50.0 (held-out) | — | [P] README |
-| gskill (CAIS'26 demo) | SWE-smith tasks: Jinja / Bleve (mini-SWE-agent + gpt-5-mini) | 55 → 82; 24 → 93 | ≈600 metric calls per optimization (↑ one-off) | [S] GEPA blog; [P] gskill README |
+| gskill (CAIS'26 demo) | SWE-smith tasks: Jinja / Bleve (mini-SWE-agent + gpt-5-mini) | 55 → 82; 24 → 93 | example config: 600 metric calls per optimization (↑ one-off) | [S] GEPA blog; [P] gskill README |
 | gskill → Claude Code | Bleve / Jinja (Haiku 4.5) | 79.3 → 100; 93.9 → 98.5 | **runs faster** (↓) | [S] GEPA blog |
 | Skill Issue | 3 Kotlin repos (mined reverted PRs) | seed doc → GEPA +4.9 pp; SkillOpt +0.1 pp | — | [S] https://arxiv.org/abs/2609.12742 |
 | CODESKILL | EnvBench / SWE-bench Verified / TB2 | no-skill → +9.69; best prompt/memory baseline → +4.01 | stable bank size | [S] https://arxiv.org/abs/2605.25430 |
